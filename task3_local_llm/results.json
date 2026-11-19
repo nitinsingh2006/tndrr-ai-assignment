@@ -1,7 +1,7 @@
 {
   "Q4_K_M": {
     "model": "Q4_K_M",
-    "model_path": "/home/nitin/.gemini/antigravity/scratch/tndrr-ai-assignment/task3_local_llm/models/qwen2.5-0.5b-q4_k_m.gguf",
+    "model_path": "models/qwen2.5-0.5b-q4_k_m.gguf",
     "file_size_mb": 491.4,
     "peak_ram_mb": 657.0,
     "ram_delta_mb": 575.0,
@@ -103,7 +103,7 @@
   },
   "Q8_0": {
     "model": "Q8_0",
-    "model_path": "/home/nitin/.gemini/antigravity/scratch/tndrr-ai-assignment/task3_local_llm/models/qwen2.5-0.5b-q8_0.gguf",
+    "model_path": "models/qwen2.5-0.5b-q8_0.gguf",
     "file_size_mb": 675.7,
     "peak_ram_mb": 828.0,
     "ram_delta_mb": 685.0,

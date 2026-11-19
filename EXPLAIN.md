@@ -67,7 +67,7 @@
 ### What the Code Does (Step by Step)
 
 **`download_doc.py`**  
-Downloads a 100+ page PDF survey about Large Language Models from arXiv.
+Downloads a 47-page PDF survey about Large Language Models from arXiv (arXiv:2307.06435).
 
 **`rag_pipeline.py`**  
 1. **Extract text:** Use `pdfplumber` to pull raw text from each page of the PDF.  
@@ -78,7 +78,9 @@ Downloads a 100+ page PDF survey about Large Language Models from arXiv.
 6. **Answer (optional):** Pass the top-5 chunks as context to an LLM (OpenAI API if key set).
 
 **BM25 (bonus):**  
-BM25 is a keyword-matching algorithm. We count word frequencies (with term frequency + inverse document frequency weighting) and score chunks by how many query words they contain. We combine BM25 scores with embedding similarity scores using reciprocal rank fusion.
+BM25 is a keyword-matching algorithm. We count word frequencies (with term frequency + inverse document frequency weighting) and score chunks by how many query words they contain. We combine BM25 scores with embedding similarity scores using reciprocal rank fusion (RRF).
+
+**Key bug fixed during audit:** The original BM25 implementation stored *normalized* TF values but tried to recover raw counts during search — introducing floating-point drift and making BM25 give near-identical scores to all chunks (Recall@5 was stuck at 0.333 for both chunk sizes). Fixed by storing raw counts directly.
 
 **Evaluation:**  
 For each of 15 test questions: check if the correct page is among the top-5 retrieved chunks → that's Recall@5. MRR = 1/rank of first correct result (averaged over all questions).
@@ -86,8 +88,15 @@ For each of 15 test questions: check if the correct page is among the top-5 retr
 ### Why BM25 Helps Embedding Search
 
 Embedding search is good at **semantic similarity** — "automobile" matches "car."  
-But it fails on **rare words** — if the query has a specific acronym like "RLHF" or a model name like "GPT-4," embeddings might miss the exact chunk.  
-BM25 is a keyword search — it matches exact terms. Combining both gives you the best of both worlds.
+But it fails on **rare words** — if the query has a specific acronym like "RLHF" or a model name like "CLIP" (used in multimodal LLMs), embeddings might miss the exact chunk.  
+BM25 is a keyword search — it matches exact terms. Combining both (via Reciprocal Rank Fusion) gives you the best of both worlds.
+
+**Real results (chunk=500 setting):**  
+- Dense-only Recall@5: 0.867  
+- BM25 hybrid Recall@5: **1.000** (perfect — all 15 questions had the correct page in top-5)  
+- The BM25 hybrid gained 0.133 by catching keyword-matching cases that the embeddings missed.
+
+**Important:** Our BM25 implementation had a bug initially (storing normalized TF instead of raw counts), causing it to give nearly identical scores to all chunks. After fixing it, BM25 hybrid significantly outperformed dense-only retrieval.
 
 ### What a Re-ranker Does
 
@@ -110,8 +119,10 @@ Re-ranking is slower but more accurate — typically applied to the top-20 to pi
 5. Save all results to `results.json` and generate a side-by-side comparison in `outputs.md`.
 
 **Two quantizations compared:**  
-- **Q8_0**: 8-bit weights. Almost no quality loss. File is ~530 MB.  
-- **Q4_K_M**: 4-bit with K-means quantization. Small quality loss. File is ~400 MB.
+- **Q4_K_M**: 4-bit with K-means quantization. File size: 491 MB. Peak RAM: 657 MB. Avg speed: **34.6 tok/s**.  
+- **Q8_0**: 8-bit weights. Almost no quality loss. File size: 676 MB. Peak RAM: 828 MB. Avg speed: **31.3 tok/s**.  
+
+Both use the same base model (Qwen2.5-0.5B-Instruct), same 10 prompts, CPU-only (no GPU for inference).
 
 ### What the KV Cache Is
 
@@ -151,7 +162,7 @@ NumPy cosine search is O(n) — it compares every chunk. FAISS uses an inverted 
 Overlap means the end of chunk N is the start of chunk N+1 (e.g., 50 tokens). This prevents a sentence from being split across chunks and disappearing from retrieval. Without overlap, context at chunk boundaries is lost.
 
 **Q7: What is MRR and why is it a better metric than Recall@5?**  
-MRR (Mean Reciprocal Rank) = average of 1/rank of the first correct result. If correct is at rank 1, score = 1. If at rank 3, score = 0.33. Recall@5 just says "was it anywhere in top 5?" MRR rewards putting the right answer higher up.
+MRR (Mean Reciprocal Rank) = average of 1/rank of the first correct result. If correct is at rank 1, score = 1. If at rank 3, score = 0.33. Recall@5 just says "was it anywhere in top 5?" MRR rewards putting the right answer higher up. In our run: chunk=500 got Recall@5=0.867, MRR=0.599 — the gap shows some correct answers were found but not at rank 1.
 
 **Q8: What is quantization and what are the tradeoffs?**  
 Quantization reduces weight precision (fp32→int8→int4). Saves memory proportionally. The tradeoff: slight quality degradation. Q4 models are ~2× smaller than Q8, but may hallucinate more on complex reasoning. For simple tasks (chat, QA), Q4 is usually acceptable.

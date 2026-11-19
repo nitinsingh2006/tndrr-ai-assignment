@@ -135,8 +135,25 @@ def evaluate_outputs(outputs: list[str], examples: list[dict]) -> dict:
         n_valid_json += 1
         field_total  += 1
 
-        # Exact match (compare normalised dicts)
-        if pred == gt:
+        def _normalise(d: dict) -> dict:
+            """Normalise field values: lowercase strings, quantity coerced to int."""
+            out = {}
+            for k, v in d.items():
+                if k == "quantity":
+                    try:
+                        v = int(v)
+                    except (TypeError, ValueError):
+                        v = str(v).strip().lower()
+                else:
+                    v = str(v).strip().lower()
+                out[k] = v   # indented inside loop
+            return out
+
+        pred_norm = _normalise(pred)
+        gt_norm   = _normalise(gt)
+
+        # Exact match (all 4 fields correct after normalisation)
+        if pred_norm == gt_norm:
             n_exact += 1
         elif len(failures) < 3:
             failures.append({
@@ -146,16 +163,10 @@ def evaluate_outputs(outputs: list[str], examples: list[dict]) -> dict:
                 "reason":   "valid JSON but fields differ",
             })
 
-        # Per-field accuracy
+        # Per-field accuracy (also normalised)
         for f in FIELDS:
-            gt_val   = gt.get(f)
-            pred_val = pred.get(f)
-            # Normalise quantity to int if possible
-            if f == "quantity":
-                try:
-                    pred_val = int(pred_val)
-                except (TypeError, ValueError):
-                    pass
+            gt_val   = gt_norm.get(f)
+            pred_val = pred_norm.get(f)
             if pred_val == gt_val:
                 field_correct[f] += 1
 

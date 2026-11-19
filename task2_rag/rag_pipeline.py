@@ -283,21 +283,24 @@ def _build_bm25_index(chunks: list[dict]) -> dict:
     tf: list[dict[str, float]] = []
     df: dict[str, int] = {}
 
+    dl_list: list[int] = []
     for chunk in chunks:
         tokens = _tokenize(chunk["text"])
+        dl_list.append(len(tokens))
         freq: dict[str, int] = {}
         for tok in tokens:
             freq[tok] = freq.get(tok, 0) + 1
-        tf.append({tok: cnt / max(1, len(tokens)) for tok, cnt in freq.items()})
+        # Store RAW counts (not normalised) — BM25 formula handles length norm
+        tf.append(freq)
         for tok in freq:
             df[tok] = df.get(tok, 0) + 1
 
-    avgdl = sum(len(_tokenize(c["text"])) for c in chunks) / max(1, N)
+    avgdl = sum(dl_list) / max(1, N)
     idf: dict[str, float] = {}
     for tok, n in df.items():
         idf[tok] = math.log((N - n + 0.5) / (n + 0.5) + 1)
 
-    return {"tf": tf, "idf": idf, "avgdl": avgdl, "N": N}
+    return {"tf": tf, "idf": idf, "avgdl": avgdl, "N": N, "dl": dl_list}
 
 
 def bm25_search(
@@ -325,11 +328,11 @@ def bm25_search(
         _bm25_cache = _build_bm25_index(chunks)
 
     idf = _bm25_cache["idf"]
-    tf_list = _bm25_cache["tf"]
+    tf_list = _bm25_cache["tf"]   # list of {tok: raw_count}
     avgdl = _bm25_cache["avgdl"]
+    dl_list = _bm25_cache["dl"]  # list of doc lengths (raw token counts)
 
     q_tokens = _tokenize(query)
-    dl_list = [len(_tokenize(c["text"])) for c in chunks]
 
     scores = np.zeros(len(chunks))
     for tok in q_tokens:
@@ -337,9 +340,10 @@ def bm25_search(
             continue
         idf_val = idf[tok]
         for i, tf_map in enumerate(tf_list):
-            tf_val = tf_map.get(tok, 0.0) * dl_list[i]  # recover raw count approx
+            tf_val = float(tf_map.get(tok, 0))   # raw count
+            dl = dl_list[i]
             numerator = tf_val * (k1 + 1)
-            denominator = tf_val + k1 * (1 - b + b * dl_list[i] / avgdl)
+            denominator = tf_val + k1 * (1 - b + b * dl / avgdl)
             scores[i] += idf_val * (numerator / max(1e-9, denominator))
 
     top_indices = np.argsort(scores)[::-1][:top_k].tolist()
