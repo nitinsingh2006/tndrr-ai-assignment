@@ -35,6 +35,7 @@
 | Setting | Value | Why |
 |---------|-------|-----|
 | LoRA rank (r) | 8 | Enough capacity for 4-field JSON without wasting params |
+| Trainable params | 819,200 (0.226%) | Only 0.226% of 362M total model weights are trained (rest frozen) |
 | lora_alpha | 16 | = 2×r, standard scaling heuristic from the original LoRA paper |
 | target_modules | q_proj, v_proj | Attention projections capture format-following behavior |
 | lora_dropout | 0.05 | Slight regularization on a 1000-sample dataset |

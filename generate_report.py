@@ -71,30 +71,30 @@ styles = getSampleStyleSheet()
 def make_styles():
     s = {}
     s['title']    = ParagraphStyle('title',    parent=styles['Title'],
-        fontSize=14, spaceAfter=2, alignment=TA_CENTER,
+        fontSize=13, spaceAfter=1.5, alignment=TA_CENTER,
         textColor=colors.HexColor('#1a1a2e'))
     s['subtitle'] = ParagraphStyle('subtitle', parent=styles['Normal'],
-        fontSize=8,  spaceAfter=3, alignment=TA_CENTER,
+        fontSize=7.5, spaceAfter=2, alignment=TA_CENTER,
         textColor=colors.HexColor('#4a4a6a'))
     s['h1']       = ParagraphStyle('h1',       parent=styles['Heading1'],
-        fontSize=10, spaceBefore=4, spaceAfter=2,
+        fontSize=9.5, spaceBefore=3, spaceAfter=1.5,
         textColor=colors.HexColor('#16213e'))
     s['h2']       = ParagraphStyle('h2',       parent=styles['Heading2'],
-        fontSize=8.5,  spaceBefore=3, spaceAfter=1.5,
+        fontSize=8.0, spaceBefore=2.5, spaceAfter=1.0,
         textColor=colors.HexColor('#0f3460'))
     s['body']     = ParagraphStyle('body',     parent=styles['Normal'],
-        fontSize=7.2, spaceAfter=2, leading=9.8, alignment=TA_JUSTIFY)
+        fontSize=7.0, spaceAfter=1.5, leading=9.2, alignment=TA_JUSTIFY)
     s['small']    = ParagraphStyle('small',    parent=styles['Normal'],
-        fontSize=6.8,  spaceAfter=1.5, leading=8.8, textColor=colors.HexColor('#333'))
+        fontSize=6.5, spaceAfter=1.0, leading=8.2, textColor=colors.HexColor('#333'))
     s['note']     = ParagraphStyle('note',     parent=styles['Normal'],
-        fontSize=6.8,  spaceAfter=1.5, leading=8.5,
-        textColor=colors.HexColor('#555'), leftIndent=6)
+        fontSize=6.5, spaceAfter=1.0, leading=8.0,
+        textColor=colors.HexColor('#555'), leftIndent=5)
     s['warn']     = ParagraphStyle('warn',     parent=styles['Normal'],
-        fontSize=7.5,  spaceAfter=2, leading=10,
+        fontSize=7.0, spaceAfter=1.5, leading=9.5,
         textColor=colors.HexColor('#cc0000'),
         backColor=colors.HexColor('#fff0f0'),
         borderColor=colors.HexColor('#cc0000'),
-        borderWidth=0.5, borderPad=3)
+        borderWidth=0.5, borderPad=2.5)
     return s
 
 S = make_styles()
@@ -106,14 +106,14 @@ def make_table(data, col_widths=None, hdr_color='#16213e'):
     tbl.setStyle(TableStyle([
         ('BACKGROUND',  (0, 0), (-1,  0), colors.HexColor(hdr_color)),
         ('TEXTCOLOR',   (0, 0), (-1,  0), colors.white),
-        ('FONTSIZE',    (0, 0), (-1,  0), 7),
+        ('FONTSIZE',    (0, 0), (-1,  0), 6.8),
         ('FONTNAME',    (0, 0), (-1,  0), 'Helvetica-Bold'),
-        ('FONTSIZE',    (0, 1), (-1, -1), 6.8),
+        ('FONTSIZE',    (0, 1), (-1, -1), 6.5),
         ('ROWBACKGROUNDS', (0, 1), (-1, -1),
          [colors.HexColor('#f4f8ff'), colors.white]),
         ('GRID',        (0, 0), (-1, -1), 0.4, colors.HexColor('#ccccdd')),
         ('VALIGN',      (0, 0), (-1, -1), 'MIDDLE'),
-        ('PADDING',     (0, 0), (-1, -1), 2),
+        ('PADDING',     (0, 0), (-1, -1), 1.5),
         ('ALIGN',       (1, 0), (-1, -1), 'CENTER'),
     ]))
     return tbl
@@ -141,7 +141,7 @@ def build_pdf(out_path="report.pdf"):
     doc = SimpleDocTemplate(
         out_path,
         pagesize=A4,
-        topMargin=0.8*cm, bottomMargin=0.8*cm,
+        topMargin=0.7*cm, bottomMargin=0.7*cm,
         leftMargin=1.5*cm, rightMargin=1.5*cm,
         title="Internship Assignment Report — Nitin Singh",
         author="Nitin Singh",
@@ -185,6 +185,8 @@ def build_pdf(out_path="report.pdf"):
         ["Setting", "Value", "Why I chose it"],
         ["rank r",         str(cfg.get('r', 8)),
          "Rank 8 gives enough capacity for a simple 4-field format"],
+        ["trainable params", "819,200 (0.226%)",
+         "Only 0.226% of 362 M total parameters trained (weights frozen)"],
         ["lora_alpha",     str(cfg.get('lora_alpha', 16)),
          "α = 2r — standard scaling from the LoRA paper"],
         ["target_modules", "q_proj, v_proj",
@@ -199,8 +201,8 @@ def build_pdf(out_path="report.pdf"):
          "Fits RTX 2050 4 GB VRAM with fp16 + gradient checkpointing"],
     ]
     story.append(make_table(lora_data,
-                            col_widths=[W*0.20, W*0.16, W*0.64]))
-    story.append(Spacer(1, 4))
+                            col_widths=[W*0.20, W*0.18, W*0.62]))
+    story.append(Spacer(1, 3))
 
     # Eval results
     story.append(Paragraph(
@@ -211,19 +213,20 @@ def build_pdf(out_path="report.pdf"):
     fpf = ft.get('per_field_accuracy', {})
 
     eval_data = [
-        ["Metric", "Base model", "Fine-tuned"],
-        ["Valid JSON rate",   pct(b.get('valid_json_rate')),  pct(ft.get('valid_json_rate'))],
-        ["Exact match",      pct(b.get('exact_match')),       pct(ft.get('exact_match'))],
-        ["Field: action",    pct(bpf.get('action')),          pct(fpf.get('action'))],
-        ["Field: item",      pct(bpf.get('item')),            pct(fpf.get('item'))],
-        ["Field: quantity",  pct(bpf.get('quantity')),        pct(fpf.get('quantity'))],
-        ["Field: date",      pct(bpf.get('date')),            pct(fpf.get('date'))],
+        ["Metric", "Base (zero-shot)*", "Base (raw prompt)", "Fine-tuned (LoRA)"],
+        ["Valid JSON rate",   "100.0%",                       pct(b.get('valid_json_rate')),  pct(ft.get('valid_json_rate'))],
+        ["Exact match",       "16.0%",                        pct(b.get('exact_match')),       pct(ft.get('exact_match'))],
+        ["Field: action",     "70.0%",                        pct(bpf.get('action')),          pct(fpf.get('action'))],
+        ["Field: item",       "27.0%",                        pct(bpf.get('item')),            pct(fpf.get('item'))],
+        ["Field: quantity",   "75.0%",                        pct(bpf.get('quantity')),        pct(fpf.get('quantity'))],
+        ["Field: date",       "71.0%",                        pct(bpf.get('date')),            pct(fpf.get('date'))],
     ]
     story.append(make_table(eval_data,
-                            col_widths=[W*0.38, W*0.31, W*0.31]))
+                            col_widths=[W*0.27, W*0.25, W*0.24, W*0.24]))
     story.append(Paragraph(
-        "<b>Base Model Note:</b> Raw inputs contain no JSON instructions, so Base responds conversationally (0% JSON). "
-        "With an explicit zero-shot prompt, Base reaches 100% valid JSON but only <b>16.0% exact match</b> (LoRA achieves 99.0% with zero prompt overhead).",
+        "<b>*Base comparison:</b> Raw prompt lacks JSON instruction, so Base answers conversationally (0% JSON). "
+        "With a fair zero-shot schema prompt, Base reaches 100% valid JSON but only <b>16.0% exact match</b> "
+        "(fails on plurals like '16 staplers'). LoRA reaches <b>99.0% exact match</b> with zero prompt overhead.",
         S['note']))
     story.append(Spacer(1, 2))
 

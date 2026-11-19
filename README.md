@@ -159,7 +159,7 @@ python generate_report.py
 
 ## 🎯 Design Decisions
 
-1. **Model (Task 1):** SmolLM2-360M-Instruct (360M params, well below 1.5B limit). Trained locally on RTX 2050 (4 GB VRAM) with fp16, gradient checkpointing, batch=2, grad_accum=8 (eff. batch 16). Training took ~5 minutes. Standard test: 99% exact match, 100% valid JSON. Hard test (typos, ambiguity): 70% exact match.
+1. **Model (Task 1):** SmolLM2-360M-Instruct (360M params, well below 1.5B limit; 819,200 trainable params = 0.226%). Trained locally on RTX 2050 (4 GB VRAM) with fp16, gradient checkpointing, batch=2, grad_accum=8 (eff. batch 16). Training took ~5 minutes. Standard test: 99% exact match, 100% valid JSON. Hard test (typos, ambiguity): 70% exact match.
 2. **RAG Document:** "A Comprehensive Overview of Large Language Models" (arXiv:2307.06435) — 47 pages extracted, downloaded via `download_doc.py` to `data/survey_llm.pdf` (gitignored, not committed to repository).
 3. **Chunk Sizes (Task 2):** Tested chunk=200 (overlap=50) vs chunk=500 (overlap=125). In our real evaluation, **chunk=200 won on Recall@5** (0.733 vs 0.667). Because ground-truth answers in technical surveys are concentrated in 1–3 sentences on a single page, smaller chunks maintain higher semantic density and avoid diluting the embedding across multiple topics.
 4. **Hit Logic (Task 2):** A retrieved chunk is counted as a hit if its source page falls within the expected page range OR if word-level passage containment is $\ge 50\%$ (`|passage_words ∩ chunk_words| / |passage_words|`, distinguishing containment from Jaccard).

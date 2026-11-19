@@ -85,5 +85,5 @@ are ~20× smaller than the 7 B estimates above. The table above is a **reference
 to understand the scaling trade-offs when fine-tuning production-scale LLMs.
 
 For the 360 M model with LoRA r=8:
-- Trainable params: ~1.5 M (< 0.5% of total)  
+- Trainable params: 819,200 (0.226% of total)  
 - Total GPU memory: **< 2 GB** (fits on any modern GPU or even CPU)

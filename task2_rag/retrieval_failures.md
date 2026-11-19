@@ -16,8 +16,7 @@ page is NOT in the top-5 retrieved chunks (Recall@5 = 0 for that question).
 
 ## 2. Two Real Failures from chunk_size=500 Run
 
-These are the two questions that **failed** in the best (chunk=500) setting.
-They are real — taken directly from `results.json > failures` for chunk_size=500.
+These are real failure questions taken directly from `results.json > failures` for chunk_size=500.
 
 ---
 
@@ -94,8 +93,8 @@ strategy works for all question types.
 
 | Setting | Dense-only Recall@5 | BM25 Hybrid Recall@5 | Improvement |
 |---------|--------------------|--------------------|-------------|
-| chunk=200 | 0.733 | 0.800 | +0.067 |
-| chunk=500 | 0.867 | **1.000** | +0.133 |
+| chunk=200 | 0.733 | **0.933** | +0.200 |
+| chunk=500 | 0.667 | **0.933** | +0.266 |
 
 BM25 hybrid fixed the two failures that dense search missed in chunk=200,
 and also fixed Q11 (multimodal) in the chunk=500 run via exact keyword matching.
