@@ -1,24 +1,76 @@
 {
-  "_note": "TEMPLATE — run evaluate.py after training to fill real values",
   "base": {
-    "valid_json_rate": "RUN_EVALUATE",
-    "exact_match": "RUN_EVALUATE",
+    "valid_json_rate": 0.0,
+    "exact_match": 0.0,
     "per_field_accuracy": {
-      "action":   "RUN",
-      "item":     "RUN",
-      "quantity": "RUN",
-      "date":     "RUN"
+      "action": 0.0,
+      "item": 0.0,
+      "quantity": 0.0,
+      "date": 0.0
     }
   },
   "finetuned": {
-    "valid_json_rate": "RUN_EVALUATE",
-    "exact_match": "RUN_EVALUATE",
+    "valid_json_rate": 100.0,
+    "exact_match": 99.0,
     "per_field_accuracy": {
-      "action":   "RUN",
-      "item":     "RUN",
-      "quantity": "RUN",
-      "date":     "RUN"
+      "action": 100.0,
+      "item": 99.0,
+      "quantity": 100.0,
+      "date": 100.0
     }
   },
-  "failures": []
+  "failures": [
+    {
+      "input": "Urgent: purchase 24 speakers, latest by July 10, 2025.",
+      "expected": "{\"action\": \"purchase\", \"item\": \"speaker\", \"quantity\": 24, \"date\": \"July 10, 2025\"}",
+      "got": "{\"action\": \"purchase\", \"item\": \"speakers\", \"quantity\": 24, \"date\": \"July 10, 2025\"}",
+      "reason": "valid JSON but fields differ"
+    },
+    {
+      "input": "i need to purhcase 13 mouse untill 2025-09-29",
+      "expected": "{\"action\": \"purchase\", \"item\": \"mouse\", \"quantity\": \"13\", \"date\": \"2025-09-29\"}",
+      "got": "{\"action\": \"purhcase\", \"item\": \"mouse\", \"quantity\": 13, \"date\": \"2025-09-29\"}",
+      "reason": "valid JSON but fields differ"
+    },
+    {
+      "input": "We need 20 keyboards by 2025-09-08.",
+      "expected": "{\"action\": \"buy\", \"item\": \"keyboard\", \"quantity\": \"20\", \"date\": \"2025-09-08\"}",
+      "got": "{\"action\": \"place\", \"item\": \"keyboard\", \"quantity\": 20, \"date\": \"2025-09-08\"}",
+      "reason": "valid JSON but fields differ"
+    },
+    {
+      "input": "We need 15 keyboards by 2025-09-23.",
+      "expected": "{\"action\": \"buy\", \"item\": \"keyboard\", \"quantity\": \"15\", \"date\": \"2025-09-23\"}",
+      "got": "{\"action\": \"place\", \"item\": \"keyboard\", \"quantity\": 15, \"date\": \"2025-09-23\"}",
+      "reason": "valid JSON but fields differ"
+    }
+  ],
+  "test_set": {
+    "n": 100,
+    "path": "data/test.jsonl"
+  },
+  "hard_test": {
+    "n": 20,
+    "path": "data/test_hard.jsonl",
+    "base": {
+      "valid_json_rate": 0.0,
+      "exact_match": 0.0,
+      "per_field_accuracy": {
+        "action": 0.0,
+        "item": 0.0,
+        "quantity": 0.0,
+        "date": 0.0
+      }
+    },
+    "finetuned": {
+      "valid_json_rate": 100.0,
+      "exact_match": 70.0,
+      "per_field_accuracy": {
+        "action": 75.0,
+        "item": 90.0,
+        "quantity": 100.0,
+        "date": 90.0
+      }
+    }
+  }
 }

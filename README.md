@@ -94,7 +94,7 @@ python evaluate.py
 # → evaluates both standard and hard test sets, saves results.json
 ```
 
-**⚠️ RUN THIS on Colab:** Open `colab_notebook.ipynb` on Google Colab (T4 GPU). The notebook runs training and evaluation on both test sets, and downloads the populated `results.json`.
+**Note:** Training was done locally on an RTX 2050 (4 GB). The Colab notebook (`colab_notebook.ipynb`) is also available for T4 GPU if preferred.
 
 ### Task 2: RAG Pipeline
 
@@ -147,8 +147,8 @@ python generate_report.py
 | Task | Step | Status | Notes |
 |------|------|--------|-------|
 | Task 1 | Dataset generation | ✅ Run locally | 1,000 train, 100 test, 20 hard test (0 train/test overlap) |
-| Task 1 | LoRA fine-tuning | 🔴 Needs GPU | Use Colab notebook (`colab_notebook.ipynb`, T4 GPU) |
-| Task 1 | Evaluation | 🔴 Needs GPU | Evaluates base vs tuned on standard & hard test sets |
+| Task 1 | LoRA fine-tuning | ✅ Run locally | RTX 2050 (4GB), fp16, batch=2, grad_accum=8, ~5 min |
+| Task 1 | Evaluation | ✅ Run locally | Base vs tuned on standard (99% EM) & hard (70% EM) test sets |
 | Task 2 | PDF download | ✅ Run locally | Downloads 47-page survey (arXiv:2307.06435, ~5 MB, gitignored) |
 | Task 2 | RAG pipeline + eval | ✅ Run locally | CPU, chunk=200 best (Recall@5=0.733, BM25 hybrid=0.933) |
 | Task 3 | Model download | ✅ Run locally | Q4_K_M (491 MB) & Q8_0 (676 MB) GGUF models (gitignored) |
@@ -159,7 +159,7 @@ python generate_report.py
 
 ## 🎯 Design Decisions
 
-1. **Model (Task 1):** SmolLM2-360M-Instruct (360M params, well below 1.5B limit) chosen for lightweight footprint and fast Colab training. For a 4-field structured extraction task, 360M parameters is sufficient to achieve high formatting fidelity.
+1. **Model (Task 1):** SmolLM2-360M-Instruct (360M params, well below 1.5B limit). Trained locally on RTX 2050 (4 GB VRAM) with fp16, gradient checkpointing, batch=2, grad_accum=8 (eff. batch 16). Training took ~5 minutes. Standard test: 99% exact match, 100% valid JSON. Hard test (typos, ambiguity): 70% exact match.
 2. **RAG Document:** "A Comprehensive Overview of Large Language Models" (arXiv:2307.06435) — 47 pages extracted, downloaded via `download_doc.py` to `data/survey_llm.pdf` (gitignored, not committed to repository).
 3. **Chunk Sizes (Task 2):** Tested chunk=200 (overlap=50) vs chunk=500 (overlap=125). In our real evaluation, **chunk=200 won on Recall@5** (0.733 vs 0.667). Because ground-truth answers in technical surveys are concentrated in 1–3 sentences on a single page, smaller chunks maintain higher semantic density and avoid diluting the embedding across multiple topics.
 4. **Hit Logic (Task 2):** A retrieved chunk is counted as a hit if its source page falls within the expected page range OR if word-level passage containment is $\ge 50\%$ (`|passage_words ∩ chunk_words| / |passage_words|`, distinguishing containment from Jaccard).

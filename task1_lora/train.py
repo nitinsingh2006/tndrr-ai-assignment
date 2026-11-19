@@ -11,7 +11,7 @@ LoRA hyperparameter rationale (see also lora_config.json):
   lora_dropout=0.05  Light regularisation on a 1 000-sample dataset
   lr=2e-4          Standard LoRA learning rate from the original paper
   epochs=3         3 passes is sufficient; more risks memorisation on 1 k samples
-  batch_size=4     Fits in ~4 GB VRAM; gradient_accumulation gives effective 16
+  batch_size=2     Fits in 4 GB VRAM on RTX 2050; grad_accum=8 gives effective 16
 """
 
 import json
@@ -48,8 +48,8 @@ TARGET_MODULES  = ["q_proj", "v_proj"]  # attention projections
 
 LR                       = 2e-4   # standard LoRA learning rate
 EPOCHS                   = 3      # 3 epochs; more risks memorisation
-BATCH_SIZE               = 4      # fits 4 GB VRAM with gradient checkpointing
-GRAD_ACCUM               = 4      # effective batch = 16
+BATCH_SIZE               = 2      # 2 per device on 4 GB VRAM (RTX 2050)
+GRAD_ACCUM               = 8      # effective batch = 16 (same as designed)
 MAX_SEQ_LENGTH           = 256
 WARMUP_STEPS             = 50
 SEED                     = 42

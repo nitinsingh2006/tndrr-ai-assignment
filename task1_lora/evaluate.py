@@ -119,15 +119,16 @@ def evaluate_outputs(outputs: list[str], examples: list[dict]) -> dict:
     failures      = []
 
     for ex, raw_out in zip(examples, outputs):
-        gt = json.loads(ex["output"])   # ground-truth dict
+        gt = ex["output"] if isinstance(ex["output"], dict) else json.loads(ex["output"])   # ground-truth dict
         pred = _extract_json(raw_out)
 
+        expected_str = json.dumps(gt) if isinstance(ex["output"], dict) else ex["output"]
         if pred is None:
             reason = "not parseable as JSON"
             if len(failures) < 3:
                 failures.append({
                     "input":    ex["input"],
-                    "expected": ex["output"],
+                    "expected": expected_str,
                     "got":      raw_out,
                     "reason":   reason,
                 })
@@ -159,7 +160,7 @@ def evaluate_outputs(outputs: list[str], examples: list[dict]) -> dict:
         elif len(failures) < 3:
             failures.append({
                 "input":    ex["input"],
-                "expected": ex["output"],
+                "expected": expected_str,
                 "got":      raw_out,
                 "reason":   "valid JSON but fields differ",
             })

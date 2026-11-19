@@ -4,7 +4,10 @@
   "lora": {
     "r": 8,
     "lora_alpha": 16,
-    "target_modules": ["q_proj", "v_proj"],
+    "target_modules": [
+      "q_proj",
+      "v_proj"
+    ],
     "lora_dropout": 0.05,
     "bias": "none",
     "task_type": "CAUSAL_LM",
@@ -17,10 +20,10 @@
     "reason_batch": "Batch 4 with grad_accum 4 = effective 16, fits 4GB VRAM"
   },
   "training": {
-    "learning_rate": 2e-4,
+    "learning_rate": 0.0002,
     "epochs": 3,
-    "batch_size": 4,
-    "gradient_accumulation_steps": 4,
+    "batch_size": 2,
+    "gradient_accumulation_steps": 8,
     "max_seq_length": 256,
     "warmup_steps": 50,
     "optimizer": "adamw_torch"

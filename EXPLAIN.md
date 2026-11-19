@@ -40,7 +40,35 @@
 | lora_dropout | 0.05 | Slight regularization on a 1000-sample dataset |
 | learning_rate | 2e-4 | Standard for LoRA; too high = unstable, too low = slow |
 | epochs | 3 | Enough to learn the format; more risks memorizing exact examples |
-| batch_size | 4 | Fits 4GB VRAM; gradient accumulation makes effective batch = 16 |
+| batch_size | 2 | Fits RTX 2050 4GB VRAM; grad_accum=8 makes effective batch = 16 |
+
+### Real Results (RTX 2050, 4 GB, ~5 min training)
+
+**Standard test (100 examples):**
+| Metric | Base | Fine-tuned |
+|--------|------|-----------|
+| Valid JSON rate | 0.0% | 100.0% |
+| Exact match | 0.0% | 99.0% |
+| Field: action | 0.0% | 100.0% |
+| Field: item | 0.0% | 99.0% |
+| Field: quantity | 0.0% | 100.0% |
+| Field: date | 0.0% | 100.0% |
+
+**Hard test (20 adversarial examples — typos, ambiguous phrasing):**
+| Metric | Base | Fine-tuned |
+|--------|------|-----------|
+| Valid JSON rate | 0.0% | 100.0% |
+| Exact match | 0.0% | 70.0% |
+| Field: action | 0.0% | 75.0% |
+| Field: item | 0.0% | 90.0% |
+| Field: quantity | 0.0% | 100.0% |
+| Field: date | 0.0% | 90.0% |
+
+### 3 Real Failure Examples
+
+1. **Plural leakage (standard test):** Input: "purchase 24 speakers" → model outputs `"item": "speakers"` instead of `"speaker"`. The input uses plural; model copies it verbatim.
+2. **Typo propagation (hard test):** Input: "i need to purhcase 13 mouse" → model outputs `"action": "purhcase"` (copying the typo) instead of correcting to `"purchase"`.
+3. **Ambiguous action (hard test):** Input: "We need 20 keyboards by 2025-09-08" → ground truth expects `"action": "buy"` but model outputs `"action": "place"`. The word "need" is ambiguous — model picked "place" which is a valid interpretation but doesn't match the expected action.
 
 ### GPU Memory Math (7B Model)
 
