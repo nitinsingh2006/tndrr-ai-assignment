@@ -676,7 +676,7 @@ def main() -> None:
     results: dict = {
         "document": {
             "source": "https://arxiv.org/pdf/2307.06435",
-            "title": "A Survey of Large Language Models",
+            "title": "A Comprehensive Overview of Large Language Models",
             "pages": total_pages,
         },
         "chunk_200": {},
