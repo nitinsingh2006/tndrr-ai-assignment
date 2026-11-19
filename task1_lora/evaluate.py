@@ -29,6 +29,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 # ── Paths ──────────────────────────────────────────────────────────────────────
 BASE_DIR        = os.path.dirname(os.path.abspath(__file__))
 TEST_PATH       = os.path.join(BASE_DIR, "data", "test.jsonl")
+TEST_HARD_PATH  = os.path.join(BASE_DIR, "data", "test_hard.jsonl")
 LORA_MODEL_DIR  = os.path.join(BASE_DIR, "lora_model")
 RESULTS_PATH    = os.path.join(BASE_DIR, "results.json")
 
@@ -219,7 +220,14 @@ def main() -> None:
     # ── Load test data ──────────────────────────────────────────────────────────
     print("Loading test data …")
     examples = load_test_data(TEST_PATH)
-    print(f"  {len(examples)} examples loaded.")
+    print(f"  {len(examples)} standard test examples loaded.")
+
+    hard_examples = []
+    if os.path.isfile(TEST_HARD_PATH):
+        hard_examples = load_test_data(TEST_HARD_PATH)
+        print(f"  {len(hard_examples)} hard test examples loaded.")
+    else:
+        print(f"  [WARN] {TEST_HARD_PATH} not found — skipping hard eval.")
 
     # ── Load tokeniser (shared) ────────────────────────────────────────────────
     print(f"Loading tokeniser from {MODEL_NAME} …")
@@ -236,9 +244,16 @@ def main() -> None:
     ).to(device)
     base_model.eval()
 
-    base_outputs = generate_outputs(base_model, tokenizer, examples, device)
-    base_metrics = evaluate_outputs(base_outputs, examples)
-    base_failures = base_metrics.pop("failures")
+    base_outputs      = generate_outputs(base_model, tokenizer, examples, device)
+    base_metrics      = evaluate_outputs(base_outputs, examples)
+    base_failures     = base_metrics.pop("failures")
+
+    base_hard_metrics: dict = {}
+    if hard_examples:
+        print("\n--- Evaluating BASE model on hard test set ---")
+        base_hard_out     = generate_outputs(base_model, tokenizer, hard_examples, device)
+        base_hard_metrics = evaluate_outputs(base_hard_out, hard_examples)
+        base_hard_metrics.pop("failures", None)
 
     del base_model
     if device == "cuda":
@@ -255,26 +270,46 @@ def main() -> None:
     ft_model = ft_model.to(device)
     ft_model.eval()
 
-    ft_outputs = generate_outputs(ft_model, tokenizer, examples, device)
-    ft_metrics = evaluate_outputs(ft_outputs, examples)
+    ft_outputs  = generate_outputs(ft_model, tokenizer, examples, device)
+    ft_metrics  = evaluate_outputs(ft_outputs, examples)
     ft_failures = ft_metrics.pop("failures")
+
+    ft_hard_metrics: dict = {}
+    if hard_examples:
+        print("\n--- Evaluating FINE-TUNED model on hard test set ---")
+        ft_hard_out     = generate_outputs(ft_model, tokenizer, hard_examples, device)
+        ft_hard_metrics = evaluate_outputs(ft_hard_out, hard_examples)
+        ft_hard_metrics.pop("failures", None)
 
     del ft_model, ft_base
     if device == "cuda":
         torch.cuda.empty_cache()
 
-    # ── Print comparison table ─────────────────────────────────────────────────
+    # ── Print comparison tables ────────────────────────────────────────────────
+    print("\n=== Standard test.jsonl (100 examples) ===")
     print_table(base_metrics, ft_metrics)
 
+    if hard_examples:
+        print(f"\n=== Hard test_hard.jsonl ({len(hard_examples)} examples) ===")
+        print_table(base_hard_metrics, ft_hard_metrics)
+
     # ── Save results.json ──────────────────────────────────────────────────────
-    # Combine up to 3 failures prioritising fine-tuned (more informative)
     combined_failures = ft_failures[:3] if ft_failures else base_failures[:3]
 
     results = {
         "base":      base_metrics,
         "finetuned": ft_metrics,
         "failures":  combined_failures,
+        "test_set":  {"n": len(examples), "path": "data/test.jsonl"},
     }
+    if hard_examples:
+        results["hard_test"] = {
+            "n":         len(hard_examples),
+            "path":      "data/test_hard.jsonl",
+            "base":      base_hard_metrics,
+            "finetuned": ft_hard_metrics,
+        }
+
     with open(RESULTS_PATH, "w") as fh:
         json.dump(results, fh, indent=2)
 

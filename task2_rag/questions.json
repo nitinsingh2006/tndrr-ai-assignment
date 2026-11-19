@@ -3,120 +3,252 @@
     "id": 1,
     "question": "What is tokenization in LLMs and what kinds of tokens does it produce?",
     "correct_source_passage": "Tokenization is an essential pre-processing step in LLM training that parses the text into non-decomposing units called tokens. Tokens can be characters, subwords, symbols, or words.",
-    "correct_page_range": [4, 4],
-    "expected_keywords": ["tokenization", "tokens", "subwords", "pre-processing"],
+    "correct_page_range": [
+      4,
+      4
+    ],
+    "expected_keywords": [
+      "tokenization",
+      "tokens",
+      "subwords",
+      "pre-processing"
+    ],
     "type": "factual"
   },
   {
     "id": 2,
     "question": "What is GPT-3's architecture and how does it differ from GPT-2?",
     "correct_source_passage": "GPT-3 architecture is the same as the GPT-2 but with dense and sparse attention in transformer layers similar to the Sparse Transformer. It shows that large models are few-shot learners.",
-    "correct_page_range": [7, 7],
-    "expected_keywords": ["GPT-3", "GPT-2", "sparse attention", "few-shot"],
+    "correct_page_range": [
+      7,
+      7
+    ],
+    "expected_keywords": [
+      "GPT-3",
+      "GPT-2",
+      "sparse attention",
+      "few-shot"
+    ],
     "type": "factual"
   },
   {
     "id": 3,
     "question": "How is RLHF used to align language models?",
     "correct_source_passage": "Researchers employ reinforcement learning with human feedback (RLHF) for model alignment. In RLHF, a fine-tuned model on demonstrations is further trained with reward modeling (RM) and reinforcement learning (RL).",
-    "correct_page_range": [7, 7],
-    "expected_keywords": ["RLHF", "reinforcement learning", "human feedback", "reward model"],
+    "correct_page_range": [
+      7,
+      7
+    ],
+    "expected_keywords": [
+      "RLHF",
+      "reinforcement learning",
+      "human feedback",
+      "reward model"
+    ],
     "type": "factual"
   },
   {
     "id": 4,
     "question": "What emergent abilities do large language models show?",
     "correct_source_passage": "LLMs appear to have emergent abilities, such as reasoning, planning, decision-making, in-context learning, answering in zero-shot settings, etc.",
-    "correct_page_range": [2, 2],
-    "expected_keywords": ["emergent", "reasoning", "planning", "in-context learning", "zero-shot"],
+    "correct_page_range": [
+      2,
+      2
+    ],
+    "expected_keywords": [
+      "emergent",
+      "reasoning",
+      "planning",
+      "in-context learning",
+      "zero-shot"
+    ],
     "type": "factual"
   },
   {
     "id": 5,
     "question": "What is chain-of-thought prompting and how does it work?",
     "correct_source_passage": "Chain-of-Thought (CoT): A special case of prompting where demonstrations contain reasoning information aggregated with inputs and outputs so that the model generates outcomes with step-by-step reasoning.",
-    "correct_page_range": [7, 7],
-    "expected_keywords": ["chain-of-thought", "CoT", "reasoning", "step-by-step", "demonstrations"],
+    "correct_page_range": [
+      7,
+      7
+    ],
+    "expected_keywords": [
+      "chain-of-thought",
+      "CoT",
+      "reasoning",
+      "step-by-step",
+      "demonstrations"
+    ],
     "type": "factual"
   },
   {
     "id": 6,
-    "question": "What are the main types of tokens produced during LLM tokenization?",
-    "correct_source_passage": "Tokenization is an essential pre-processing step in LLM training that parses the text into non-decomposing units called tokens. Tokens can be characters, subwords, symbols, or words.",
-    "correct_page_range": [4, 4],
-    "expected_keywords": ["tokens", "characters", "subwords", "symbols", "tokenization"],
+    "question": "How does self-attention work in a transformer, and what is cross-attention used for?",
+    "correct_source_passage": "Self-Attention: Calculates attention using queries, keys, and values from the same block (encoder or decoder). Cross Attention: It is used in encoder-decoder architectures.",
+    "correct_page_range": [
+      4,
+      4
+    ],
+    "expected_keywords": [
+      "self-attention",
+      "queries",
+      "keys",
+      "values",
+      "cross attention",
+      "encoder",
+      "decoder"
+    ],
     "type": "factual"
   },
   {
     "id": 7,
     "question": "What is instruction tuning and how is a model trained with it?",
     "correct_source_passage": "Instruction-tuning: To enable a model to respond to user queries effectively, the pre-trained model is fine-tuned on instruction formatted data i.e., instruction and an input-output pair.",
-    "correct_page_range": [7, 7],
-    "expected_keywords": ["instruction-tuning", "instruction", "fine-tuned", "input-output pair"],
+    "correct_page_range": [
+      7,
+      7
+    ],
+    "expected_keywords": [
+      "instruction-tuning",
+      "instruction",
+      "fine-tuned",
+      "input-output pair"
+    ],
     "type": "factual"
   },
   {
     "id": 8,
     "question": "Which benchmarks are used to evaluate LLMs across multiple tasks?",
     "correct_source_passage": "Multi-Task MMLU, SuperGLUE, BIG-bench, GLUE, BBH, CUGE, Zero-CLUE, FewCLUE, BlendedSkillTalk, HELM, KLUE-STS.",
-    "correct_page_range": [29, 29],
-    "expected_keywords": ["MMLU", "BIG-bench", "SuperGLUE", "GLUE", "HELM", "benchmark"],
+    "correct_page_range": [
+      29,
+      29
+    ],
+    "expected_keywords": [
+      "MMLU",
+      "BIG-bench",
+      "SuperGLUE",
+      "GLUE",
+      "HELM",
+      "benchmark"
+    ],
     "type": "factual"
   },
   {
     "id": 9,
     "question": "What is fact-conflicting hallucination in language models?",
     "correct_source_passage": "Fact-conflicting hallucination involves LLM's generation of content that does not align with established world knowledge.",
-    "correct_page_range": [34, 34],
-    "expected_keywords": ["hallucination", "fact-conflicting", "world knowledge", "LLM"],
+    "correct_page_range": [
+      34,
+      34
+    ],
+    "expected_keywords": [
+      "hallucination",
+      "fact-conflicting",
+      "world knowledge",
+      "LLM"
+    ],
     "type": "factual"
   },
   {
     "id": 10,
     "question": "How large is the context window in Gemini-1 and what does it allow?",
     "correct_source_passage": "The model has a 2M context window and can reason over information up to 10M tokens. Such large context windows were never achieved previously and shown to have a huge impact on performance gain.",
-    "correct_page_range": [10, 10],
-    "expected_keywords": ["context window", "2M", "10M", "tokens", "Gemini"],
+    "correct_page_range": [
+      10,
+      10
+    ],
+    "expected_keywords": [
+      "context window",
+      "2M",
+      "10M",
+      "tokens",
+      "Gemini"
+    ],
     "type": "numeric"
   },
   {
     "id": 11,
     "question": "What are multimodal LLMs and what do they process beyond text?",
     "correct_source_passage": "MultimodalLLMs (MLLMs) present substantial benefits compared to standard LLMs that process only text. By incorporating information from various modalities like image, video, audio, etc.",
-    "correct_page_range": [22, 22],
-    "expected_keywords": ["multimodal", "MLLMs", "image", "video", "audio", "modalities"],
+    "correct_page_range": [
+      22,
+      22
+    ],
+    "expected_keywords": [
+      "multimodal",
+      "MLLMs",
+      "image",
+      "video",
+      "audio",
+      "modalities"
+    ],
     "type": "factual"
   },
   {
     "id": 12,
     "question": "How does DeepSeek study LLM scaling laws?",
     "correct_source_passage": "DeepSeek studies the LLMs scaling laws in detail to determine the optimal non-embedding model size and training data. The experiments were performed for 8 budgets ranging from 1e17 to 3e20 training FLOPs.",
-    "correct_page_range": [10, 10],
-    "expected_keywords": ["DeepSeek", "scaling laws", "FLOPs", "training data", "model size"],
+    "correct_page_range": [
+      10,
+      10
+    ],
+    "expected_keywords": [
+      "DeepSeek",
+      "scaling laws",
+      "FLOPs",
+      "training data",
+      "model size"
+    ],
     "type": "factual"
   },
   {
     "id": 13,
     "question": "What is masked language modeling as a pre-training objective?",
     "correct_source_passage": "In masked language modeling, tokens or spans are masked randomly and the attention is not bidirectional but unidirectional, attending either left-to-right or right-to-left context.",
-    "correct_page_range": [6, 6],
-    "expected_keywords": ["masked language modeling", "masked", "tokens", "bidirectional", "pre-training"],
+    "correct_page_range": [
+      6,
+      6
+    ],
+    "expected_keywords": [
+      "masked language modeling",
+      "masked",
+      "tokens",
+      "bidirectional",
+      "pre-training"
+    ],
     "type": "factual"
   },
   {
     "id": 14,
     "question": "What is mixed precision training and why is it used?",
     "correct_source_passage": "Mixed Precision: It is a famous method for LLMs to reduce memory usage and improve training efficiency.",
-    "correct_page_range": [23, 23],
-    "expected_keywords": ["mixed precision", "memory", "training efficiency", "LLMs"],
+    "correct_page_range": [
+      23,
+      23
+    ],
+    "expected_keywords": [
+      "mixed precision",
+      "memory",
+      "training efficiency",
+      "LLMs"
+    ],
     "type": "factual"
   },
   {
     "id": 15,
     "question": "What is in-context learning and how does it help a model on a new task?",
     "correct_source_passage": "In-context Learning: Also known as few-shot learning, here, multiple input-output demonstration pairs are shown to the model to generate the desired response.",
-    "correct_page_range": [7, 7],
-    "expected_keywords": ["in-context learning", "few-shot", "demonstration", "input-output"],
+    "correct_page_range": [
+      7,
+      7
+    ],
+    "expected_keywords": [
+      "in-context learning",
+      "few-shot",
+      "demonstration",
+      "input-output"
+    ],
     "type": "factual"
   }
 ]

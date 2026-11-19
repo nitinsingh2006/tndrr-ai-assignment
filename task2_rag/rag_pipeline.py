@@ -487,31 +487,41 @@ def answer_with_llm(
 # ---------------------------------------------------------------------------
 
 
-def _passage_overlap(passage: str, chunk_text: str) -> float:
-    """Return word-level overlap ratio between passage and chunk (Jaccard on words)."""
+def _passage_containment(passage: str, chunk_text: str) -> float:
+    """Return passage containment score: fraction of passage words found in chunk.
+
+    Containment (not Jaccard): |passage_words ∩ chunk_words| / |passage_words|.
+    A score of 1.0 means every word of the passage appears in the chunk.
+    Jaccard would divide by the union; containment divides by passage size only,
+    so a large chunk that contains the passage fully scores 1.0 regardless of
+    extra words — which is exactly what we want for retrieval hit detection.
+    """
     if not passage or not chunk_text:
         return 0.0
     p_words = set(re.findall(r'\b[a-zA-Z0-9]+\b', passage.lower()))
     c_words = set(re.findall(r'\b[a-zA-Z0-9]+\b', chunk_text.lower()))
     if not p_words:
         return 0.0
-    # What fraction of passage words appear in the chunk?
+    # Containment: fraction of passage words present in the chunk
     return len(p_words & c_words) / len(p_words)
 
 
 def _is_hit(q: dict, result: dict) -> bool:
-    """A chunk is a hit if passage overlap >= 50% OR page in correct_page_range."""
+    """A chunk is a hit if passage containment >= 50% OR page in correct_page_range.
+
+    Uses containment (not Jaccard): fraction of passage words present in chunk.
+    """
     page_range = q.get("correct_page_range", [0, 999])
     lo, hi = page_range[0], page_range[1]
     page_ok = lo <= result["page"] <= hi
     passage = q.get("correct_source_passage", "")
-    overlap = _passage_overlap(passage, result.get("text", ""))
-    return page_ok or overlap >= 0.50
+    containment = _passage_containment(passage, result.get("text", ""))
+    return page_ok or containment >= 0.50
 
 
 def _page_in_results(page_range: list[int], results: list[dict],
                      q: dict | None = None) -> bool:
-    """Check if any result is a hit (page match OR passage overlap >= 50%)."""
+    """Check if any result is a hit (page match OR passage containment >= 50%)."""
     if q is not None:
         return any(_is_hit(q, r) for r in results)
     lo, hi = page_range[0], page_range[1]
@@ -520,7 +530,7 @@ def _page_in_results(page_range: list[int], results: list[dict],
 
 def _reciprocal_rank(page_range: list[int], results: list[dict],
                      q: dict | None = None) -> float:
-    """Return 1/rank of the first hit result."""
+    """Return 1/rank of the first hit result (page match OR containment >= 50%)."""
     for r in results:
         hit = _is_hit(q, r) if q is not None else (page_range[0] <= r["page"] <= page_range[1])
         if hit:

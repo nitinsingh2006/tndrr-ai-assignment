@@ -6,9 +6,9 @@
   },
   "chunk_200": {
     "num_chunks": 449,
-    "recall_at_1": 0.4,
+    "recall_at_1": 0.3333,
     "recall_at_5": 0.7333,
-    "mrr": 0.55
+    "mrr": 0.5167
   },
   "chunk_500": {
     "num_chunks": 197,

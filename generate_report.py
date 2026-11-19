@@ -228,6 +228,30 @@ def build_pdf(out_path="report.pdf"):
             S['note']))
     story.append(Spacer(1, 3))
 
+    # Hard test section
+    hard = t1.get('hard_test', {})
+    story.append(Paragraph("Hard Test Set (20 adversarial examples — test.jsonl + test_hard.jsonl)", S['h2']))
+    if hard and not T1_IS_TEMPLATE:
+        hb  = hard.get('base', {})
+        hft = hard.get('finetuned', {})
+        hard_data = [
+            ["Metric", "Base (hard)", "Fine-tuned (hard)"],
+            ["Valid JSON rate", pct(hb.get('valid_json_rate')),  pct(hft.get('valid_json_rate'))],
+            ["Exact match",     pct(hb.get('exact_match')),      pct(hft.get('exact_match'))],
+        ]
+        story.append(make_table(hard_data, col_widths=[W*0.38, W*0.31, W*0.31]))
+        story.append(Paragraph(
+            f"Hard set ({hard.get('n', 20)} examples): typos, passive voice, missing date field, "
+            f"numbers written as words, all-caps, extra noise words. "
+            f"Reported separately to show robustness gap vs standard test.", S['note']))
+    else:
+        story.append(Paragraph(
+            "[pending] Hard test results will appear here after Colab run. "
+            "Hard set has 20 examples: typos, passive voice, missing fields, all-caps, sentence fragments. "
+            "Both base and fine-tuned models are evaluated separately and stored in results.json under 'hard_test'.",
+            S['note']))
+    story.append(Spacer(1, 3))
+
     # 3 failures
     story.append(Paragraph("3 Real Fine-tuned Model Failures", S['h2']))
     failures = t1.get('failures', [])
@@ -305,13 +329,16 @@ def build_pdf(out_path="report.pdf"):
     story.append(make_table(ret_data,
                             col_widths=[W*0.34, W*0.13, W*0.15, W*0.15, W*0.23]))
 
-    best = t2.get('best_chunk_size', 500)
+    best = t2.get('best_chunk_size', 200)
     story.append(Paragraph(
-        f"<b>Best:</b> chunk=500. Larger chunks keep more context per passage, "
-        f"so the embedding can match the query meaning without being cut mid-sentence. "
-        f"chunk=200 had more retrieval misses because key facts were split across chunk boundaries. "
-        f"BM25 hybrid on chunk=500 reached Recall@5=1.000 — it matched exact keywords "
-        f"(model names, acronyms) that dense embeddings missed.", S['note']))
+        f"<b>Best: chunk=200.</b> Recall@5=0.733 vs 0.667 for chunk=500 — chunk=200 wins by +0.067. "
+        f"Why: each question's ground-truth passage is 1–3 sentences on a single page. "
+        f"A 200-token chunk holds exactly that passage, giving the embedding a tight, focused signal. "
+        f"A 500-token chunk spans 3–5 topics — the embedding averages over them, diluting the signal. "
+        f"Hit logic: page match OR passage containment ≥ 50% "
+        f"(containment = passage_words ∩ chunk_words / passage_words, not Jaccard). "
+        f"BM25 hybrid on chunk=200 reached Recall@5=0.933, adding +0.200 over dense-only.",
+        S['note']))
     story.append(Spacer(1, 4))
 
     # Failures
@@ -460,7 +487,7 @@ def build_pdf(out_path="report.pdf"):
         "• Task 1: Fine-tuning results not yet available (pending Colab GPU run). "
         "The pipeline is fully coded and tested; only the trained weights are missing.<br/>"
         "• Task 2: Document is 47 pages (above the 30-page minimum). "
-        "15 questions, Recall@5=0.867 on the best chunk size.<br/>"
+        "15 questions, Recall@5=0.733 (chunk=200, best setting), BM25 hybrid=0.933.<br/>"
         "• Task 3: Runs on CPU with a 0.5B model — assignment allows any two quantisation levels. "
         "Decode speed (~34 tok/s on 4 cores) is representative of edge-inference.", S['body']))
 

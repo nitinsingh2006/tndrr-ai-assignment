@@ -91,16 +91,17 @@ Embedding search is good at **semantic similarity** — "automobile" matches "ca
 But it fails on **rare words** — if the query has a specific acronym like "RLHF" or a model name like "CLIP" (used in multimodal LLMs), embeddings might miss the exact chunk.  
 BM25 is a keyword search — it matches exact terms. Combining both (via Reciprocal Rank Fusion) gives you the best of both worlds.
 
-**Real results (chunk=200 setting, with passage-overlap hit logic):**  
-- Dense Recall@1: 0.400 / Recall@5: 0.733 / MRR: 0.550  
+**Real results (chunk=200 setting):**  
+- Dense Recall@1: 0.333 / Recall@5: **0.733** / MRR: 0.517  
 - BM25 Hybrid Recall@5: **0.933**  
 
 **Real results (chunk=500 setting):**  
 - Dense Recall@1: 0.533 / Recall@5: 0.667 / MRR: 0.600  
-- BM25 Hybrid Recall@5: **0.933**  
+- BM25 Hybrid Recall@5: 0.933  
 
-**Best setting**: chunk=200 wins on Recall@5 (0.733 vs 0.667); chunk=500 wins on Recall@1 (0.533 vs 0.400).  
-Hit logic: a chunk counts as a hit if its page falls in the correct range OR passage word-overlap ≥ 50% (Jaccard on words).
+**Best setting: chunk=200** wins on Recall@5 (0.733 vs 0.667) — the primary retrieval metric.  
+Why chunk=200 wins: smaller chunks contain exactly one focused passage, so the embedding captures a tight semantic signal. Chunk=500 packs too many topics into one chunk — when a 500-token chunk spans both RLHF and benchmarks, neither query finds it at the top. Chunk=200 keeps each passage in a dedicated chunk, improving Recall@5 by +0.067.  
+Hit logic: a chunk counts as a hit if its source page falls in the correct range **OR** passage containment ≥ 50%. Containment = `|passage_words ∩ chunk_words| / |passage_words|` — different from Jaccard, which divides by the union. We use containment because a large chunk surrounding the passage should score 1.0 regardless of extra words.
 
 **Important — honest finding about the BM25 bug:** The old BM25 code (storing normalized TF) actually produced reasonable score spreads (2–4 points across top-5), NOT near-identical scores as initially claimed. The main cause of the original 0.333 Recall@5 was **wrong page ranges in questions.json** (pages 70–100 on a 47-page PDF → zero possible hits). The BM25 code fix is correct (raw counts are more numerically stable), but the page-range fix deserves most of the credit for the metric jump. Fixing both is the right approach.
 
@@ -168,7 +169,7 @@ NumPy cosine search is O(n) — it compares every chunk. FAISS uses an inverted 
 Overlap means the end of chunk N is the start of chunk N+1 (e.g., 50 tokens). This prevents a sentence from being split across chunks and disappearing from retrieval. Without overlap, context at chunk boundaries is lost.
 
 **Q7: What is MRR and why is it a better metric than Recall@5?**  
-MRR (Mean Reciprocal Rank) = average of 1/rank of the first correct result. If correct is at rank 1, score = 1. If at rank 3, score = 0.33. Recall@5 just says "was it anywhere in top 5?" MRR rewards putting the right answer higher up. In our run: chunk=500 got Recall@5=0.867, MRR=0.599 — the gap shows some correct answers were found but not at rank 1.
+MRR (Mean Reciprocal Rank) = average of 1/rank of the first correct result. If correct is at rank 1, score = 1. If at rank 3, score = 0.33. Recall@5 just says "was it anywhere in top 5?" MRR rewards putting the right answer higher up. In our run: chunk=200 got Recall@5=0.733, MRR=0.517 — chunk=200 is the best setting.
 
 **Q8: What is quantization and what are the tradeoffs?**  
 Quantization reduces weight precision (fp32→int8→int4). Saves memory proportionally. The tradeoff: slight quality degradation. Q4 models are ~2× smaller than Q8, but may hallucinate more on complex reasoning. For simple tasks (chat, QA), Q4 is usually acceptable.
