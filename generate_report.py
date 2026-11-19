@@ -141,7 +141,7 @@ def build_pdf(out_path="report.pdf"):
     doc = SimpleDocTemplate(
         out_path,
         pagesize=A4,
-        topMargin=1.0*cm, bottomMargin=1.0*cm,
+        topMargin=0.8*cm, bottomMargin=0.8*cm,
         leftMargin=1.5*cm, rightMargin=1.5*cm,
         title="Internship Assignment Report — Nitin Singh",
         author="Nitin Singh",
@@ -158,7 +158,7 @@ def build_pdf(out_path="report.pdf"):
         "Task 1: LoRA Fine-tuning · Task 2: RAG from Scratch · Task 3: Local LLM",
         S['subtitle']))
     story.append(HRFlowable(width="100%", thickness=1,
-                            color=colors.HexColor('#16213e'), spaceAfter=5))
+                            color=colors.HexColor('#16213e'), spaceAfter=3))
 
     # ══════════════ TASK 1 ═══════════════════════════════════════════════════
     story.append(Paragraph("Task 1 — LoRA Fine-tuning (SmolLM2-360M-Instruct → JSON)", S['h1']))
@@ -221,12 +221,11 @@ def build_pdf(out_path="report.pdf"):
     ]
     story.append(make_table(eval_data,
                             col_widths=[W*0.38, W*0.31, W*0.31]))
-
-    if T1_IS_TEMPLATE:
-        story.append(Paragraph(
-            "All [pending] cells fill automatically once results.json is updated from Colab.",
-            S['note']))
-    story.append(Spacer(1, 3))
+    story.append(Paragraph(
+        "<b>Base Model Note:</b> Raw inputs contain no JSON instructions, so Base responds conversationally (0% JSON). "
+        "With an explicit zero-shot prompt, Base reaches 100% valid JSON but only <b>16.0% exact match</b> (LoRA achieves 99.0% with zero prompt overhead).",
+        S['note']))
+    story.append(Spacer(1, 2))
 
     # Hard test section
     hard = t1.get('hard_test', {})

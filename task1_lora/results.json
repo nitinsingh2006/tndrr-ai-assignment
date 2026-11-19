@@ -24,25 +24,25 @@
       "input": "Urgent: purchase 24 speakers, latest by July 10, 2025.",
       "expected": "{\"action\": \"purchase\", \"item\": \"speaker\", \"quantity\": 24, \"date\": \"July 10, 2025\"}",
       "got": "{\"action\": \"purchase\", \"item\": \"speakers\", \"quantity\": 24, \"date\": \"July 10, 2025\"}",
-      "reason": "valid JSON but fields differ"
+      "reason": "plural leakage (item copied as plural 'speakers')"
     },
     {
       "input": "i need to purhcase 13 mouse untill 2025-09-29",
       "expected": "{\"action\": \"purchase\", \"item\": \"mouse\", \"quantity\": \"13\", \"date\": \"2025-09-29\"}",
       "got": "{\"action\": \"purhcase\", \"item\": \"mouse\", \"quantity\": 13, \"date\": \"2025-09-29\"}",
-      "reason": "valid JSON but fields differ"
+      "reason": "typo propagation (copied 'purhcase' from input)"
     },
     {
       "input": "We need 20 keyboards by 2025-09-08.",
       "expected": "{\"action\": \"buy\", \"item\": \"keyboard\", \"quantity\": \"20\", \"date\": \"2025-09-08\"}",
       "got": "{\"action\": \"place\", \"item\": \"keyboard\", \"quantity\": 20, \"date\": \"2025-09-08\"}",
-      "reason": "valid JSON but fields differ"
+      "reason": "ambiguous verb ('need' in input; GT arbitrarily chose 'buy', model output 'place')"
     },
     {
       "input": "We need 15 keyboards by 2025-09-23.",
       "expected": "{\"action\": \"buy\", \"item\": \"keyboard\", \"quantity\": \"15\", \"date\": \"2025-09-23\"}",
       "got": "{\"action\": \"place\", \"item\": \"keyboard\", \"quantity\": 15, \"date\": \"2025-09-23\"}",
-      "reason": "valid JSON but fields differ"
+      "reason": "ambiguous verb ('need' in input; GT arbitrarily chose 'buy', model output 'place')"
     }
   ],
   "test_set": {

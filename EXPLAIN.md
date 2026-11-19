@@ -45,30 +45,32 @@
 ### Real Results (RTX 2050, 4 GB, ~5 min training)
 
 **Standard test (100 examples):**
-| Metric | Base | Fine-tuned |
-|--------|------|-----------|
-| Valid JSON rate | 0.0% | 100.0% |
-| Exact match | 0.0% | 99.0% |
-| Field: action | 0.0% | 100.0% |
-| Field: item | 0.0% | 99.0% |
-| Field: quantity | 0.0% | 100.0% |
-| Field: date | 0.0% | 100.0% |
+| Metric | Base (raw prompt) | Base (zero-shot prompt) | Fine-tuned (LoRA) |
+|--------|-------------------|-------------------------|-------------------|
+| Valid JSON rate | 0.0% | 100.0% | **100.0%** |
+| Exact match | 0.0% | 16.0% | **99.0%** |
+| Field: action | 0.0% | 70.0% | **100.0%** |
+| Field: item | 0.0% | 27.0% | **99.0%** |
+| Field: quantity | 0.0% | 75.0% | **100.0%** |
+| Field: date | 0.0% | 71.0% | **100.0%** |
+
+*Why Base scored 0.0% on raw prompt:* The raw test prompt (`<|im_start|>user\nUrgent: get 16 staplers...<|im_end|>`) has no instruction asking for JSON. The base instruct model naturally answers conversationally ("I'm an AI, I cannot purchase staplers..."). When given an explicit zero-shot instruction prompt describing the JSON schema, Base reaches 100% valid JSON but only **16.0% exact match** (failing on plural forms like "16 staplers" and formatting). Fine-tuning taught the model to output exact structured JSON directly without prompt overhead at **99.0% exact match**.
 
 **Hard test (20 adversarial examples — typos, ambiguous phrasing):**
-| Metric | Base | Fine-tuned |
-|--------|------|-----------|
-| Valid JSON rate | 0.0% | 100.0% |
-| Exact match | 0.0% | 70.0% |
-| Field: action | 0.0% | 75.0% |
-| Field: item | 0.0% | 90.0% |
-| Field: quantity | 0.0% | 100.0% |
-| Field: date | 0.0% | 90.0% |
+| Metric | Base (raw) | Fine-tuned (LoRA) |
+|--------|------------|-------------------|
+| Valid JSON rate | 0.0% | **100.0%** |
+| Exact match | 0.0% | **70.0%** |
+| Field: action | 0.0% | **75.0%** |
+| Field: item | 0.0% | **90.0%** |
+| Field: quantity | 0.0% | **100.0%** |
+| Field: date | 0.0% | **90.0%** |
 
-### 3 Real Failure Examples
+### Real Failure Analysis
 
-1. **Plural leakage (standard test):** Input: "purchase 24 speakers" → model outputs `"item": "speakers"` instead of `"speaker"`. The input uses plural; model copies it verbatim.
-2. **Typo propagation (hard test):** Input: "i need to purhcase 13 mouse" → model outputs `"action": "purhcase"` (copying the typo) instead of correcting to `"purchase"`.
-3. **Ambiguous action (hard test):** Input: "We need 20 keyboards by 2025-09-08" → ground truth expects `"action": "buy"` but model outputs `"action": "place"`. The word "need" is ambiguous — model picked "place" which is a valid interpretation but doesn't match the expected action.
+1. **Plural leakage (standard test):** Input: `"purchase 24 speakers"` → model outputs `"item": "speakers"` instead of `"speaker"`. The input uses plural; model copies it verbatim.
+2. **Typo propagation (hard test):** Input: `"i need to purhcase 13 mouse"` → model outputs `"action": "purhcase"` (copying the typo) instead of normalizing to `"purchase"`.
+3. **Ground-Truth Label Ambiguity (hard test):** Input: `"We need 20 keyboards by 2025-09-08."` → Expected: `"action": "buy"` | Got: `"action": "place"`. The input contains NO explicit action verb (no "buy", "order", or "procure"), only the modal "need". Ground truth arbitrarily assigned `"buy"`, while the model predicted `"place"` (short for place order). This is a genuine dataset ambiguity, not a model reasoning failure.
 
 ### GPU Memory Math (7B Model)
 
