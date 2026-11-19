@@ -1,0 +1,206 @@
+{
+  "Q4_K_M": {
+    "model": "Q4_K_M",
+    "model_path": "/home/nitin/.gemini/antigravity/scratch/tndrr-ai-assignment/task3_local_llm/models/qwen2.5-0.5b-q4_k_m.gguf",
+    "file_size_mb": 491.4,
+    "peak_ram_mb": 657.0,
+    "ram_delta_mb": 575.0,
+    "total_tokens": 769,
+    "total_time_sec": 22.21,
+    "avg_tokens_per_sec": 34.6,
+    "per_prompt": [
+      {
+        "id": 1,
+        "category": "factual",
+        "prompt": "What is the capital of France?",
+        "output": "The capital of France is Paris.",
+        "tokens_generated": 7,
+        "time_sec": 0.78,
+        "tokens_per_sec": 8.9
+      },
+      {
+        "id": 2,
+        "category": "explanation",
+        "prompt": "Explain the concept of recursion in programming in 2-3 sentences.",
+        "output": "Recursion is a programming technique where a function calls itself repeatedly until a base case is reached. This allows a function to solve a problem by breaking it down into smaller, similar problems, which can then be solved independently. Recursion is often used to solve problems that can be divided into simpler subproblems, such as finding the factorial of a number or calculating the sum of a series.",
+        "tokens_generated": 77,
+        "time_sec": 2.19,
+        "tokens_per_sec": 35.2
+      },
+      {
+        "id": 3,
+        "category": "code",
+        "prompt": "Write a Python function that checks if a number is prime.",
+        "output": "Certainly! Here's a Python function that checks if a number is prime:\n\n```python\ndef is_prime(n):\n    \"\"\"\n    Check if a number is prime.\n    \n    Parameters:\n    n (int): The number to check.\n    \n    Returns:\n    bool: True if the number is prime, False otherwise.\n    \"\"\"\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n %",
+        "tokens_generated": 100,
+        "time_sec": 2.3,
+        "tokens_per_sec": 43.6
+      },
+      {
+        "id": 4,
+        "category": "math",
+        "prompt": "What is 15% of 240? Show your working.",
+        "output": "To find 15% of 240, you can follow these steps:\n\n1. Convert the percentage to a decimal. To do this, divide 15 by 100.\n   \\[\n   15\\% = \\frac{15}{100} = 0.15\n   \\]\n\n2. Multiply the decimal by the number 240.\n   \\[\n   0.15 \\times 240 =",
+        "tokens_generated": 100,
+        "time_sec": 2.5,
+        "tokens_per_sec": 40.1
+      },
+      {
+        "id": 5,
+        "category": "list",
+        "prompt": "List 3 pros and 3 cons of electric vehicles.",
+        "output": "Pros of Electric Vehicles:\n\n1. **Environmental Benefits**: Electric vehicles produce zero tailpipe emissions, which significantly reduces air pollution and greenhouse gas emissions. This is a major advantage for reducing the carbon footprint of transportation.\n\n2. **Energy Efficiency**: Electric vehicles are more energy-efficient than traditional gasoline-powered vehicles. They use less energy to move the same distance, which can lead to lower fuel costs and reduced environmental impact.\n\n3. **Reduced Maintenance**: Electric vehicles typically have fewer moving parts and less maintenance than",
+        "tokens_generated": 100,
+        "time_sec": 2.5,
+        "tokens_per_sec": 40.1
+      },
+      {
+        "id": 6,
+        "category": "translation",
+        "prompt": "Translate 'Hello, how are you?' to French and Spanish.",
+        "output": "The translation of \"Hello, how are you?\" to French is \"Bonjour, comment \u00e7a va?\" and to Spanish is \"Hola, \u00bfc\u00f3mo est\u00e1s?\"",
+        "tokens_generated": 33,
+        "time_sec": 1.16,
+        "tokens_per_sec": 28.5
+      },
+      {
+        "id": 7,
+        "category": "summary",
+        "prompt": "Summarize the water cycle in one paragraph.",
+        "output": "The water cycle, also known as the hydrological cycle, is a continuous process that involves the movement of water on, above, and below the surface of the Earth. This cycle includes several key components: evaporation, condensation, precipitation, collection, and runoff. The water cycle is essential for maintaining the Earth's climate, as it helps to regulate the amount of water available for plant growth and human use.",
+        "tokens_generated": 83,
+        "time_sec": 2.44,
+        "tokens_per_sec": 34.1
+      },
+      {
+        "id": 8,
+        "category": "history",
+        "prompt": "What year did World War II end, and what were the main causes?",
+        "output": "World War II ended in 1945. The main causes of the war were:\n\n1. The rise of Nazi Germany and its aggressive expansionism.\n2. The Soviet Union's aggressive expansionism and its invasion of Poland in 1939.\n3. The United States' aggressive expansionism and its involvement in the war in 1941.\n4. The United States' aggressive expansionism and its involvement in the war in 1942.\n5. The",
+        "tokens_generated": 100,
+        "time_sec": 3.15,
+        "tokens_per_sec": 31.7
+      },
+      {
+        "id": 9,
+        "category": "creative",
+        "prompt": "Give me a short creative story about a robot learning to paint (3 sentences).",
+        "output": "A robot named Max was born with the ability to learn and adapt, but it was never designed to paint. One day, Max was tasked with painting a masterpiece for a museum exhibit. The robot spent months honing its skills, learning from its mistakes and adapting to new techniques. In the end, Max's painting was a masterpiece, and the museum was filled with admiration and respect for the robot's ability to learn and improve.",
+        "tokens_generated": 86,
+        "time_sec": 2.96,
+        "tokens_per_sec": 29.1
+      },
+      {
+        "id": 10,
+        "category": "explanation_simple",
+        "prompt": "What is machine learning? Explain to a 10-year-old.",
+        "output": "Machine learning is like a magic trick where computers learn from lots of data to do things that used to be hard for them to do. Imagine you have a toy car, and you want it to go really fast. But it's hard for it to do that without being taught. That's kind of like machine learning. It's like a smart machine that can learn from its mistakes and get better at doing things.",
+        "tokens_generated": 83,
+        "time_sec": 2.24,
+        "tokens_per_sec": 37.0
+      }
+    ]
+  },
+  "Q8_0": {
+    "model": "Q8_0",
+    "model_path": "/home/nitin/.gemini/antigravity/scratch/tndrr-ai-assignment/task3_local_llm/models/qwen2.5-0.5b-q8_0.gguf",
+    "file_size_mb": 675.7,
+    "peak_ram_mb": 828.0,
+    "ram_delta_mb": 685.0,
+    "total_tokens": 772,
+    "total_time_sec": 24.68,
+    "avg_tokens_per_sec": 31.3,
+    "per_prompt": [
+      {
+        "id": 1,
+        "category": "factual",
+        "prompt": "What is the capital of France?",
+        "output": "The capital of France is Paris.",
+        "tokens_generated": 7,
+        "time_sec": 0.47,
+        "tokens_per_sec": 15.0
+      },
+      {
+        "id": 2,
+        "category": "explanation",
+        "prompt": "Explain the concept of recursion in programming in 2-3 sentences.",
+        "output": "Recursion is a programming technique where a function calls itself repeatedly until a certain condition is met. This allows a program to solve problems by breaking them down into smaller, more manageable subproblems. Recursion is often used to solve problems that can be divided into simpler subproblems, such as sorting, searching, or tree traversal.",
+        "tokens_generated": 65,
+        "time_sec": 2.14,
+        "tokens_per_sec": 30.3
+      },
+      {
+        "id": 3,
+        "category": "code",
+        "prompt": "Write a Python function that checks if a number is prime.",
+        "output": "Certainly! Here's a Python function that checks if a number is prime:\n\n```python\ndef is_prime(n):\n    \"\"\"\n    Check if a number is prime.\n    \n    Parameters:\n    n (int): The number to check.\n    \n    Returns:\n    bool: True if the number is prime, False otherwise.\n    \"\"\"\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n %",
+        "tokens_generated": 100,
+        "time_sec": 2.6,
+        "tokens_per_sec": 38.5
+      },
+      {
+        "id": 4,
+        "category": "math",
+        "prompt": "What is 15% of 240? Show your working.",
+        "output": "To find 15% of 240, you can follow these steps:\n\n1. Convert the percentage to a decimal. Since 15% is the same as 15 out of 100, you can write it as 0.15.\n2. Multiply the decimal by the number 240.\n\nSo, you calculate:\n\\[ 0.15 \\times 240 = 36 \\]\n\nTherefore, 15% of",
+        "tokens_generated": 100,
+        "time_sec": 2.79,
+        "tokens_per_sec": 35.9
+      },
+      {
+        "id": 5,
+        "category": "list",
+        "prompt": "List 3 pros and 3 cons of electric vehicles.",
+        "output": "Pros of Electric Vehicles (EVs):\n\n1. Environmental Impact: EVs produce zero tailpipe emissions, which significantly reduces air pollution and greenhouse gas emissions. This is a major benefit for the environment, as it helps mitigate climate change.\n\n2. Energy Efficiency: EVs are more energy-efficient than traditional gasoline-powered vehicles. They require less fuel to travel the same distance, which can lead to lower fuel costs and reduced emissions.\n\n3. Reduced Maintenance: EVs typically have fewer moving parts and require less",
+        "tokens_generated": 100,
+        "time_sec": 3.93,
+        "tokens_per_sec": 25.5
+      },
+      {
+        "id": 6,
+        "category": "translation",
+        "prompt": "Translate 'Hello, how are you?' to French and Spanish.",
+        "output": "In French, \"Hello, how are you?\" translates to \"Bonjour, comment \u00e7a va?\" in English. In Spanish, it translates to \"\u00a1Hola, \u00bfc\u00f3mo est\u00e1s?\"",
+        "tokens_generated": 38,
+        "time_sec": 1.53,
+        "tokens_per_sec": 24.8
+      },
+      {
+        "id": 7,
+        "category": "summary",
+        "prompt": "Summarize the water cycle in one paragraph.",
+        "output": "The water cycle, also known as the hydrological cycle, is a continuous process that involves the movement of water on, above, and below the surface of the Earth. It involves several key processes: evaporation, condensation, precipitation, collection, and runoff. The cycle is essential for maintaining the balance of water on Earth, as it helps to regulate temperature, prevent flooding, and provide fresh water for human use.",
+        "tokens_generated": 84,
+        "time_sec": 2.54,
+        "tokens_per_sec": 33.1
+      },
+      {
+        "id": 8,
+        "category": "history",
+        "prompt": "What year did World War II end, and what were the main causes?",
+        "output": "World War II ended in 1945. The main causes of World War II were:\n\n1. The rise of Nazi Germany and its aggressive expansionism.\n2. The Soviet Union's aggressive expansionism and its invasion of Poland in 1939.\n3. The United States' aggressive expansionism and its involvement in the war in Europe.\n4. The United States' aggressive expansionism and its involvement in the war in the Pacific.\n5. The United States' aggressive expansionism",
+        "tokens_generated": 100,
+        "time_sec": 2.78,
+        "tokens_per_sec": 35.9
+      },
+      {
+        "id": 9,
+        "category": "creative",
+        "prompt": "Give me a short creative story about a robot learning to paint (3 sentences).",
+        "output": "A curious robot named Max was fascinated by the vibrant colors and intricate details of painting. He spent hours in his lab, experimenting with different brushes and techniques. One day, he stumbled upon a painting that he had never seen before. Max was inspired and decided to learn from it. He spent countless hours studying the brush strokes and colors, and eventually, he was able to replicate the painting's style. Max's journey to painting was not just a learning experience, but a discovery of his own creativity and",
+        "tokens_generated": 100,
+        "time_sec": 3.43,
+        "tokens_per_sec": 29.2
+      },
+      {
+        "id": 10,
+        "category": "explanation_simple",
+        "prompt": "What is machine learning? Explain to a 10-year-old.",
+        "output": "Machine learning is like a magic trick that helps computers learn from lots of data to do things that used to be hard for them to do. Imagine if you had a toy car that could learn to drive itself. That's kind of what machine learning is like. It's like a computer that can learn from lots of different things and do things that used to be hard for it to do.",
+        "tokens_generated": 78,
+        "time_sec": 2.47,
+        "tokens_per_sec": 31.6
+      }
+    ]
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "document": {
+    "source": "https://arxiv.org/pdf/2307.06435",
+    "title": "A Survey of Large Language Models",
+    "pages": 47
+  },
+  "chunk_200": {
+    "num_chunks": 449,
+    "recall_at_1": 0.2667,
+    "recall_at_5": 0.4,
+    "mrr": 0.3133
+  },
+  "chunk_500": {
+    "num_chunks": 197,
+    "recall_at_1": 0.2667,
+    "recall_at_5": 0.4667,
+    "mrr": 0.35
+  },
+  "bm25_hybrid": {
+    "chunk_200_hybrid_recall_at_5": 0.3333,
+    "chunk_500_hybrid_recall_at_5": 0.3333
+  },
+  "failures": [
+    {
+      "chunk_size": 200,
+      "id": 3,
+      "question": "What is RLHF and how is it used to align large language models with human preferences?",
+      "expected_page_range": [
+        70,
+        85
+      ],
+      "retrieved_pages": [
+        46,
+        46,
+        42,
+        40,
+        46
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 200,
+      "id": 4,
+      "question": "What are emergent abilities in large language models and at what scale do they typically appear?",
+      "expected_page_range": [
+        50,
+        70
+      ],
+      "retrieved_pages": [
+        47,
+        46,
+        46,
+        1,
+        47
+      ],
+      "type": "multi-sentence"
+    },
+    {
+      "chunk_size": 200,
+      "id": 5,
+      "question": "How does chain-of-thought prompting improve reasoning in language models?",
+      "expected_page_range": [
+        50,
+        75
+      ],
+      "retrieved_pages": [
+        7,
+        44,
+        31,
+        31,
+        47
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 200,
+      "id": 6,
+      "question": "What tokenization methods are commonly used in large language models like GPT and BERT?",
+      "expected_page_range": [
+        10,
+        30
+      ],
+      "retrieved_pages": [
+        36,
+        4,
+        46,
+        37,
+        36
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 200,
+      "id": 8,
+      "question": "What benchmarks are commonly used to evaluate the performance of large language models?",
+      "expected_page_range": [
+        85,
+        100
+      ],
+      "retrieved_pages": [
+        41,
+        40,
+        46,
+        40,
+        46
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 200,
+      "id": 9,
+      "question": "What causes hallucination in language models and what techniques help mitigate it?",
+      "expected_page_range": [
+        70,
+        100
+      ],
+      "retrieved_pages": [
+        34,
+        46,
+        46,
+        1,
+        1
+      ],
+      "type": "multi-sentence"
+    },
+    {
+      "chunk_size": 200,
+      "id": 11,
+      "question": "What are multimodal large language models and how do they process images alongside text?",
+      "expected_page_range": [
+        50,
+        85
+      ],
+      "retrieved_pages": [
+        42,
+        1,
+        22,
+        42,
+        36
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 200,
+      "id": 12,
+      "question": "Describe the scaling laws that govern the relationship between model size, data, and compute.",
+      "expected_page_range": [
+        1,
+        30
+      ],
+      "retrieved_pages": [
+        39,
+        47,
+        40,
+        36,
+        35
+      ],
+      "type": "multi-sentence"
+    },
+    {
+      "chunk_size": 200,
+      "id": 15,
+      "question": "How do researchers assess the in-context learning ability of language models on downstream NLP tasks?",
+      "expected_page_range": [
+        50,
+        85
+      ],
+      "retrieved_pages": [
+        13,
+        2,
+        2,
+        26,
+        27
+      ],
+      "type": "paraphrased"
+    },
+    {
+      "chunk_size": 500,
+      "id": 3,
+      "question": "What is RLHF and how is it used to align large language models with human preferences?",
+      "expected_page_range": [
+        70,
+        85
+      ],
+      "retrieved_pages": [
+        36,
+        36,
+        45,
+        40,
+        17
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 500,
+      "id": 4,
+      "question": "What are emergent abilities in large language models and at what scale do they typically appear?",
+      "expected_page_range": [
+        50,
+        70
+      ],
+      "retrieved_pages": [
+        36,
+        45,
+        1,
+        47,
+        27
+      ],
+      "type": "multi-sentence"
+    },
+    {
+      "chunk_size": 500,
+      "id": 5,
+      "question": "How does chain-of-thought prompting improve reasoning in language models?",
+      "expected_page_range": [
+        50,
+        75
+      ],
+      "retrieved_pages": [
+        7,
+        31,
+        44,
+        26,
+        27
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 500,
+      "id": 6,
+      "question": "What tokenization methods are commonly used in large language models like GPT and BERT?",
+      "expected_page_range": [
+        10,
+        30
+      ],
+      "retrieved_pages": [
+        36,
+        37,
+        4,
+        9,
+        39
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 500,
+      "id": 8,
+      "question": "What benchmarks are commonly used to evaluate the performance of large language models?",
+      "expected_page_range": [
+        85,
+        100
+      ],
+      "retrieved_pages": [
+        35,
+        36,
+        40,
+        40,
+        41
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 500,
+      "id": 9,
+      "question": "What causes hallucination in language models and what techniques help mitigate it?",
+      "expected_page_range": [
+        70,
+        100
+      ],
+      "retrieved_pages": [
+        34,
+        45,
+        46,
+        40,
+        36
+      ],
+      "type": "multi-sentence"
+    },
+    {
+      "chunk_size": 500,
+      "id": 11,
+      "question": "What are multimodal large language models and how do they process images alongside text?",
+      "expected_page_range": [
+        50,
+        85
+      ],
+      "retrieved_pages": [
+        42,
+        42,
+        40,
+        36,
+        1
+      ],
+      "type": "factual"
+    },
+    {
+      "chunk_size": 500,
+      "id": 15,
+      "question": "How do researchers assess the in-context learning ability of language models on downstream NLP tasks?",
+      "expected_page_range": [
+        50,
+        85
+      ],
+      "retrieved_pages": [
+        27,
+        2,
+        43,
+        43,
+        36
+      ],
+      "type": "paraphrased"
+    }
+  ],
+  "best_chunk_size": 500
+}

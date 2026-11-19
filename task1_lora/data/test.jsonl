@@ -1,0 +1,100 @@
+{"input": "Urgent: get 16 staplers, latest by November 28, 2025.", "output": "{\"action\": \"get\", \"item\": \"stapler\", \"quantity\": 16, \"date\": \"November 28, 2025\"}"}
+{"input": "Hey, purchase 1 staplers for me by May 22, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"stapler\", \"quantity\": 1, \"date\": \"May 22, 2025\"}"}
+{"input": "I need to cancel 45 chair(s) for November 06, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"chair\", \"quantity\": 45, \"date\": \"November 06, 2025\"}"}
+{"input": "I need to reserve 30 tablet(s) for October 17, 2025.", "output": "{\"action\": \"reserve\", \"item\": \"tablet\", \"quantity\": 30, \"date\": \"October 17, 2025\"}"}
+{"input": "I'd like to purchase 14 cables, expected by April 06, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"cable\", \"quantity\": 14, \"date\": \"April 06, 2025\"}"}
+{"input": "Please book 8 coffee machines by August 21, 2025.", "output": "{\"action\": \"book\", \"item\": \"coffee machine\", \"quantity\": 8, \"date\": \"August 21, 2025\"}"}
+{"input": "Can you book 34 webcams? Deadline is July 27, 2025.", "output": "{\"action\": \"book\", \"item\": \"webcam\", \"quantity\": 34, \"date\": \"July 27, 2025\"}"}
+{"input": "I need to order 1 headset(s) for July 03, 2025.", "output": "{\"action\": \"order\", \"item\": \"headset\", \"quantity\": 1, \"date\": \"July 03, 2025\"}"}
+{"input": "Hey, schedule 43 monitors for me by April 16, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"monitor\", \"quantity\": 43, \"date\": \"April 16, 2025\"}"}
+{"input": "Please reorder 38 laptops by October 24, 2025.", "output": "{\"action\": \"reorder\", \"item\": \"laptop\", \"quantity\": 38, \"date\": \"October 24, 2025\"}"}
+{"input": "Urgent: cancel 33 coffee machines, latest by February 27, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"coffee machine\", \"quantity\": 33, \"date\": \"February 27, 2025\"}"}
+{"input": "Please go ahead and get 6 speaker(s) — needed on September 13, 2025.", "output": "{\"action\": \"get\", \"item\": \"speaker\", \"quantity\": 6, \"date\": \"September 13, 2025\"}"}
+{"input": "Can you request 33 mouses? Deadline is November 13, 2025.", "output": "{\"action\": \"request\", \"item\": \"mouse\", \"quantity\": 33, \"date\": \"November 13, 2025\"}"}
+{"input": "Urgent: purchase 24 speakers, latest by July 10, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"speaker\", \"quantity\": 24, \"date\": \"July 10, 2025\"}"}
+{"input": "Please go ahead and reorder 5 cable(s) — needed on October 16, 2025.", "output": "{\"action\": \"reorder\", \"item\": \"cable\", \"quantity\": 5, \"date\": \"October 16, 2025\"}"}
+{"input": "Hey, schedule 32 tablets for me by March 14, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"tablet\", \"quantity\": 32, \"date\": \"March 14, 2025\"}"}
+{"input": "Team needs 21 speakers — please request them by April 07, 2025.", "output": "{\"action\": \"request\", \"item\": \"speaker\", \"quantity\": 21, \"date\": \"April 07, 2025\"}"}
+{"input": "I'd like to book 15 chargers, expected by June 20, 2025.", "output": "{\"action\": \"book\", \"item\": \"charger\", \"quantity\": 15, \"date\": \"June 20, 2025\"}"}
+{"input": "Team needs 31 keyboards — please buy them by December 04, 2025.", "output": "{\"action\": \"buy\", \"item\": \"keyboard\", \"quantity\": 31, \"date\": \"December 04, 2025\"}"}
+{"input": "Can you buy 46 cables? Deadline is November 30, 2025.", "output": "{\"action\": \"buy\", \"item\": \"cable\", \"quantity\": 46, \"date\": \"November 30, 2025\"}"}
+{"input": "We want to schedule 31 units of water bottle before May 19, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"water bottle\", \"quantity\": 31, \"date\": \"May 19, 2025\"}"}
+{"input": "Please request 4 headsets by December 10, 2025.", "output": "{\"action\": \"request\", \"item\": \"headset\", \"quantity\": 4, \"date\": \"December 10, 2025\"}"}
+{"input": "I'd like to request 6 chairs, expected by August 24, 2025.", "output": "{\"action\": \"request\", \"item\": \"chair\", \"quantity\": 6, \"date\": \"August 24, 2025\"}"}
+{"input": "Kindly schedule 27 water bottles, delivery by November 13, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"water bottle\", \"quantity\": 27, \"date\": \"November 13, 2025\"}"}
+{"input": "Hey, request 49 notebooks for me by August 04, 2025.", "output": "{\"action\": \"request\", \"item\": \"notebook\", \"quantity\": 49, \"date\": \"August 04, 2025\"}"}
+{"input": "Urgent: get 5 monitors, latest by April 07, 2025.", "output": "{\"action\": \"get\", \"item\": \"monitor\", \"quantity\": 5, \"date\": \"April 07, 2025\"}"}
+{"input": "Urgent: schedule 4 coffee machines, latest by July 18, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"coffee machine\", \"quantity\": 4, \"date\": \"July 18, 2025\"}"}
+{"input": "Can you reserve 16 mouses? Deadline is June 06, 2025.", "output": "{\"action\": \"reserve\", \"item\": \"mouse\", \"quantity\": 16, \"date\": \"June 06, 2025\"}"}
+{"input": "Urgent: order 41 webcams, latest by September 11, 2025.", "output": "{\"action\": \"order\", \"item\": \"webcam\", \"quantity\": 41, \"date\": \"September 11, 2025\"}"}
+{"input": "Please go ahead and reserve 10 phone(s) — needed on July 31, 2025.", "output": "{\"action\": \"reserve\", \"item\": \"phone\", \"quantity\": 10, \"date\": \"July 31, 2025\"}"}
+{"input": "Team needs 36 monitors — please cancel them by May 08, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"monitor\", \"quantity\": 36, \"date\": \"May 08, 2025\"}"}
+{"input": "We want to get 46 units of cable before November 09, 2025.", "output": "{\"action\": \"get\", \"item\": \"cable\", \"quantity\": 46, \"date\": \"November 09, 2025\"}"}
+{"input": "I'd like to purchase 47 notebooks, expected by July 07, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"notebook\", \"quantity\": 47, \"date\": \"July 07, 2025\"}"}
+{"input": "We want to request 36 units of chair before June 14, 2025.", "output": "{\"action\": \"request\", \"item\": \"chair\", \"quantity\": 36, \"date\": \"June 14, 2025\"}"}
+{"input": "Hey, get 46 laptops for me by December 25, 2025.", "output": "{\"action\": \"get\", \"item\": \"laptop\", \"quantity\": 46, \"date\": \"December 25, 2025\"}"}
+{"input": "I need to order 32 webcam(s) for March 13, 2025.", "output": "{\"action\": \"order\", \"item\": \"webcam\", \"quantity\": 32, \"date\": \"March 13, 2025\"}"}
+{"input": "I need to get 33 stapler(s) for July 16, 2025.", "output": "{\"action\": \"get\", \"item\": \"stapler\", \"quantity\": 33, \"date\": \"July 16, 2025\"}"}
+{"input": "Hey, request 38 tablets for me by April 13, 2025.", "output": "{\"action\": \"request\", \"item\": \"tablet\", \"quantity\": 38, \"date\": \"April 13, 2025\"}"}
+{"input": "I'd like to reorder 2 cables, expected by July 05, 2025.", "output": "{\"action\": \"reorder\", \"item\": \"cable\", \"quantity\": 2, \"date\": \"July 05, 2025\"}"}
+{"input": "I need to get 23 monitor(s) for September 30, 2025.", "output": "{\"action\": \"get\", \"item\": \"monitor\", \"quantity\": 23, \"date\": \"September 30, 2025\"}"}
+{"input": "I need to cancel 6 cable(s) for October 02, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"cable\", \"quantity\": 6, \"date\": \"October 02, 2025\"}"}
+{"input": "Can you get 10 water bottles? Deadline is March 29, 2025.", "output": "{\"action\": \"get\", \"item\": \"water bottle\", \"quantity\": 10, \"date\": \"March 29, 2025\"}"}
+{"input": "We want to request 18 units of charger before February 09, 2025.", "output": "{\"action\": \"request\", \"item\": \"charger\", \"quantity\": 18, \"date\": \"February 09, 2025\"}"}
+{"input": "Please buy 42 desks by August 16, 2025.", "output": "{\"action\": \"buy\", \"item\": \"desk\", \"quantity\": 42, \"date\": \"August 16, 2025\"}"}
+{"input": "Please reserve 5 pens by November 27, 2025.", "output": "{\"action\": \"reserve\", \"item\": \"pen\", \"quantity\": 5, \"date\": \"November 27, 2025\"}"}
+{"input": "Please go ahead and cancel 27 charger(s) — needed on March 03, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"charger\", \"quantity\": 27, \"date\": \"March 03, 2025\"}"}
+{"input": "Urgent: schedule 34 chargers, latest by September 25, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"charger\", \"quantity\": 34, \"date\": \"September 25, 2025\"}"}
+{"input": "Urgent: reorder 34 mouses, latest by January 04, 2025.", "output": "{\"action\": \"reorder\", \"item\": \"mouse\", \"quantity\": 34, \"date\": \"January 04, 2025\"}"}
+{"input": "I'd like to reorder 24 phones, expected by January 23, 2025.", "output": "{\"action\": \"reorder\", \"item\": \"phone\", \"quantity\": 24, \"date\": \"January 23, 2025\"}"}
+{"input": "I need to order 16 stapler(s) for December 30, 2025.", "output": "{\"action\": \"order\", \"item\": \"stapler\", \"quantity\": 16, \"date\": \"December 30, 2025\"}"}
+{"input": "I need to purchase 39 projector(s) for August 11, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"projector\", \"quantity\": 39, \"date\": \"August 11, 2025\"}"}
+{"input": "Hey, reserve 18 speakers for me by June 06, 2025.", "output": "{\"action\": \"reserve\", \"item\": \"speaker\", \"quantity\": 18, \"date\": \"June 06, 2025\"}"}
+{"input": "Kindly schedule 6 keyboards, delivery by May 18, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"keyboard\", \"quantity\": 6, \"date\": \"May 18, 2025\"}"}
+{"input": "Urgent: cancel 34 webcams, latest by November 19, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"webcam\", \"quantity\": 34, \"date\": \"November 19, 2025\"}"}
+{"input": "I need to book 38 webcam(s) for May 16, 2025.", "output": "{\"action\": \"book\", \"item\": \"webcam\", \"quantity\": 38, \"date\": \"May 16, 2025\"}"}
+{"input": "I need to purchase 7 pen(s) for October 24, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"pen\", \"quantity\": 7, \"date\": \"October 24, 2025\"}"}
+{"input": "I'd like to cancel 22 tablets, expected by April 06, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"tablet\", \"quantity\": 22, \"date\": \"April 06, 2025\"}"}
+{"input": "I'd like to reserve 48 speakers, expected by February 13, 2025.", "output": "{\"action\": \"reserve\", \"item\": \"speaker\", \"quantity\": 48, \"date\": \"February 13, 2025\"}"}
+{"input": "Please book 25 phones by February 13, 2025.", "output": "{\"action\": \"book\", \"item\": \"phone\", \"quantity\": 25, \"date\": \"February 13, 2025\"}"}
+{"input": "We want to book 24 units of water bottle before August 31, 2025.", "output": "{\"action\": \"book\", \"item\": \"water bottle\", \"quantity\": 24, \"date\": \"August 31, 2025\"}"}
+{"input": "We want to get 23 units of tablet before March 30, 2025.", "output": "{\"action\": \"get\", \"item\": \"tablet\", \"quantity\": 23, \"date\": \"March 30, 2025\"}"}
+{"input": "Urgent: reorder 40 chargers, latest by April 24, 2025.", "output": "{\"action\": \"reorder\", \"item\": \"charger\", \"quantity\": 40, \"date\": \"April 24, 2025\"}"}
+{"input": "Urgent: book 36 whiteboards, latest by April 16, 2025.", "output": "{\"action\": \"book\", \"item\": \"whiteboard\", \"quantity\": 36, \"date\": \"April 16, 2025\"}"}
+{"input": "I need to request 31 monitor(s) for April 24, 2025.", "output": "{\"action\": \"request\", \"item\": \"monitor\", \"quantity\": 31, \"date\": \"April 24, 2025\"}"}
+{"input": "I'd like to purchase 25 pens, expected by April 05, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"pen\", \"quantity\": 25, \"date\": \"April 05, 2025\"}"}
+{"input": "Can you request 27 water bottles? Deadline is July 07, 2025.", "output": "{\"action\": \"request\", \"item\": \"water bottle\", \"quantity\": 27, \"date\": \"July 07, 2025\"}"}
+{"input": "Can you order 2 phones? Deadline is April 30, 2025.", "output": "{\"action\": \"order\", \"item\": \"phone\", \"quantity\": 2, \"date\": \"April 30, 2025\"}"}
+{"input": "I need to purchase 27 charger(s) for December 22, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"charger\", \"quantity\": 27, \"date\": \"December 22, 2025\"}"}
+{"input": "Hey, get 10 water bottles for me by October 16, 2025.", "output": "{\"action\": \"get\", \"item\": \"water bottle\", \"quantity\": 10, \"date\": \"October 16, 2025\"}"}
+{"input": "Kindly cancel 30 mouses, delivery by December 19, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"mouse\", \"quantity\": 30, \"date\": \"December 19, 2025\"}"}
+{"input": "Team needs 11 staplers — please schedule them by December 12, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"stapler\", \"quantity\": 11, \"date\": \"December 12, 2025\"}"}
+{"input": "Can you cancel 15 keyboards? Deadline is July 16, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"keyboard\", \"quantity\": 15, \"date\": \"July 16, 2025\"}"}
+{"input": "Please go ahead and buy 29 notebook(s) — needed on May 07, 2025.", "output": "{\"action\": \"buy\", \"item\": \"notebook\", \"quantity\": 29, \"date\": \"May 07, 2025\"}"}
+{"input": "I'd like to book 26 mouses, expected by January 11, 2025.", "output": "{\"action\": \"book\", \"item\": \"mouse\", \"quantity\": 26, \"date\": \"January 11, 2025\"}"}
+{"input": "We want to request 36 units of coffee machine before September 05, 2025.", "output": "{\"action\": \"request\", \"item\": \"coffee machine\", \"quantity\": 36, \"date\": \"September 05, 2025\"}"}
+{"input": "Urgent: request 28 cables, latest by June 11, 2025.", "output": "{\"action\": \"request\", \"item\": \"cable\", \"quantity\": 28, \"date\": \"June 11, 2025\"}"}
+{"input": "Hey, book 42 notebooks for me by December 31, 2025.", "output": "{\"action\": \"book\", \"item\": \"notebook\", \"quantity\": 42, \"date\": \"December 31, 2025\"}"}
+{"input": "Kindly schedule 39 webcams, delivery by March 20, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"webcam\", \"quantity\": 39, \"date\": \"March 20, 2025\"}"}
+{"input": "Kindly cancel 11 cables, delivery by July 09, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"cable\", \"quantity\": 11, \"date\": \"July 09, 2025\"}"}
+{"input": "Team needs 1 phones — please reorder them by January 09, 2025.", "output": "{\"action\": \"reorder\", \"item\": \"phone\", \"quantity\": 1, \"date\": \"January 09, 2025\"}"}
+{"input": "Hey, reserve 8 webcams for me by July 25, 2025.", "output": "{\"action\": \"reserve\", \"item\": \"webcam\", \"quantity\": 8, \"date\": \"July 25, 2025\"}"}
+{"input": "Urgent: reorder 24 desks, latest by October 11, 2025.", "output": "{\"action\": \"reorder\", \"item\": \"desk\", \"quantity\": 24, \"date\": \"October 11, 2025\"}"}
+{"input": "Urgent: book 28 notebooks, latest by July 12, 2025.", "output": "{\"action\": \"book\", \"item\": \"notebook\", \"quantity\": 28, \"date\": \"July 12, 2025\"}"}
+{"input": "Hey, request 42 chargers for me by May 23, 2025.", "output": "{\"action\": \"request\", \"item\": \"charger\", \"quantity\": 42, \"date\": \"May 23, 2025\"}"}
+{"input": "We want to purchase 32 units of phone before September 04, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"phone\", \"quantity\": 32, \"date\": \"September 04, 2025\"}"}
+{"input": "I need to request 33 cable(s) for January 06, 2025.", "output": "{\"action\": \"request\", \"item\": \"cable\", \"quantity\": 33, \"date\": \"January 06, 2025\"}"}
+{"input": "We want to book 46 units of pen before April 17, 2025.", "output": "{\"action\": \"book\", \"item\": \"pen\", \"quantity\": 46, \"date\": \"April 17, 2025\"}"}
+{"input": "Please order 32 pens by November 02, 2025.", "output": "{\"action\": \"order\", \"item\": \"pen\", \"quantity\": 32, \"date\": \"November 02, 2025\"}"}
+{"input": "Please go ahead and cancel 39 keyboard(s) — needed on January 21, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"keyboard\", \"quantity\": 39, \"date\": \"January 21, 2025\"}"}
+{"input": "Team needs 5 webcams — please buy them by November 01, 2025.", "output": "{\"action\": \"buy\", \"item\": \"webcam\", \"quantity\": 5, \"date\": \"November 01, 2025\"}"}
+{"input": "Hey, book 43 desks for me by June 10, 2025.", "output": "{\"action\": \"book\", \"item\": \"desk\", \"quantity\": 43, \"date\": \"June 10, 2025\"}"}
+{"input": "I need to cancel 22 keyboard(s) for May 22, 2025.", "output": "{\"action\": \"cancel\", \"item\": \"keyboard\", \"quantity\": 22, \"date\": \"May 22, 2025\"}"}
+{"input": "Team needs 29 speakers — please request them by June 02, 2025.", "output": "{\"action\": \"request\", \"item\": \"speaker\", \"quantity\": 29, \"date\": \"June 02, 2025\"}"}
+{"input": "I need to purchase 46 projector(s) for May 30, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"projector\", \"quantity\": 46, \"date\": \"May 30, 2025\"}"}
+{"input": "We want to request 30 units of charger before July 24, 2025.", "output": "{\"action\": \"request\", \"item\": \"charger\", \"quantity\": 30, \"date\": \"July 24, 2025\"}"}
+{"input": "Please order 9 monitors by June 20, 2025.", "output": "{\"action\": \"order\", \"item\": \"monitor\", \"quantity\": 9, \"date\": \"June 20, 2025\"}"}
+{"input": "Hey, schedule 17 laptops for me by July 16, 2025.", "output": "{\"action\": \"schedule\", \"item\": \"laptop\", \"quantity\": 17, \"date\": \"July 16, 2025\"}"}
+{"input": "Can you purchase 32 coffee machines? Deadline is April 05, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"coffee machine\", \"quantity\": 32, \"date\": \"April 05, 2025\"}"}
+{"input": "Please go ahead and purchase 12 phone(s) — needed on May 23, 2025.", "output": "{\"action\": \"purchase\", \"item\": \"phone\", \"quantity\": 12, \"date\": \"May 23, 2025\"}"}
+{"input": "I'd like to buy 29 mouses, expected by March 27, 2025.", "output": "{\"action\": \"buy\", \"item\": \"mouse\", \"quantity\": 29, \"date\": \"March 27, 2025\"}"}

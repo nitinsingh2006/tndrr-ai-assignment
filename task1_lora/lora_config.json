@@ -1,0 +1,28 @@
+{
+  "model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "task": "text-to-JSON (action, item, quantity, date)",
+  "lora": {
+    "r": 8,
+    "lora_alpha": 16,
+    "target_modules": ["q_proj", "v_proj"],
+    "lora_dropout": 0.05,
+    "bias": "none",
+    "task_type": "CAUSAL_LM",
+    "reason_r": "Rank 8 is enough capacity for a simple 4-field JSON format task",
+    "reason_alpha": "alpha=2*r is a standard heuristic that keeps gradients stable",
+    "reason_modules": "q_proj and v_proj in attention capture instruction-following patterns",
+    "reason_dropout": "0.05 prevents overfitting on the 1000-sample dataset",
+    "reason_lr": "2e-4 is the standard LoRA learning rate from the original paper",
+    "reason_epochs": "3 epochs is enough; more risks memorization on small dataset",
+    "reason_batch": "Batch 4 with grad_accum 4 = effective 16, fits 4GB VRAM"
+  },
+  "training": {
+    "learning_rate": 2e-4,
+    "epochs": 3,
+    "batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "max_seq_length": 256,
+    "warmup_steps": 50,
+    "optimizer": "adamw_torch"
+  }
+}

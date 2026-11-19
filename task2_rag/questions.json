@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "question": "What is the transformer architecture and how does self-attention work in large language models?",
+    "correct_page_range": [10, 30],
+    "expected_keywords": ["transformer", "self-attention", "attention mechanism", "encoder", "decoder", "multi-head"],
+    "type": "factual"
+  },
+  {
+    "id": 2,
+    "question": "How many parameters does GPT-3 have and what dataset was it trained on?",
+    "correct_page_range": [1, 20],
+    "expected_keywords": ["GPT-3", "175 billion", "parameters", "Common Crawl", "training data"],
+    "type": "numeric"
+  },
+  {
+    "id": 3,
+    "question": "What is RLHF and how is it used to align large language models with human preferences?",
+    "correct_page_range": [70, 85],
+    "expected_keywords": ["RLHF", "reinforcement learning", "human feedback", "reward model", "alignment", "PPO"],
+    "type": "factual"
+  },
+  {
+    "id": 4,
+    "question": "What are emergent abilities in large language models and at what scale do they typically appear?",
+    "correct_page_range": [50, 70],
+    "expected_keywords": ["emergent", "emergent abilities", "scale", "few-shot", "capabilities", "billion parameters"],
+    "type": "multi-sentence"
+  },
+  {
+    "id": 5,
+    "question": "How does chain-of-thought prompting improve reasoning in language models?",
+    "correct_page_range": [50, 75],
+    "expected_keywords": ["chain-of-thought", "CoT", "reasoning", "step-by-step", "prompting", "arithmetic"],
+    "type": "factual"
+  },
+  {
+    "id": 6,
+    "question": "What tokenization methods are commonly used in large language models like GPT and BERT?",
+    "correct_page_range": [10, 30],
+    "expected_keywords": ["tokenization", "BPE", "byte pair encoding", "WordPiece", "SentencePiece", "vocabulary"],
+    "type": "factual"
+  },
+  {
+    "id": 7,
+    "question": "What is instruction tuning and how does it differ from standard fine-tuning of language models?",
+    "correct_page_range": [30, 55],
+    "expected_keywords": ["instruction tuning", "fine-tuning", "FLAN", "instruction following", "task descriptions"],
+    "type": "factual"
+  },
+  {
+    "id": 8,
+    "question": "What benchmarks are commonly used to evaluate the performance of large language models?",
+    "correct_page_range": [85, 100],
+    "expected_keywords": ["benchmark", "MMLU", "BIG-bench", "evaluation", "SuperGLUE", "HellaSwag", "TruthfulQA"],
+    "type": "factual"
+  },
+  {
+    "id": 9,
+    "question": "What causes hallucination in language models and what techniques help mitigate it?",
+    "correct_page_range": [70, 100],
+    "expected_keywords": ["hallucination", "factual", "mitigate", "grounding", "retrieval", "factuality"],
+    "type": "multi-sentence"
+  },
+  {
+    "id": 10,
+    "question": "How large is the context window for modern LLMs and what methods extend it beyond the training limit?",
+    "correct_page_range": [10, 40],
+    "expected_keywords": ["context length", "context window", "tokens", "position encoding", "RoPE", "ALiBi", "extrapolation"],
+    "type": "numeric"
+  },
+  {
+    "id": 11,
+    "question": "What are multimodal large language models and how do they process images alongside text?",
+    "correct_page_range": [50, 85],
+    "expected_keywords": ["multimodal", "vision", "image", "CLIP", "visual", "text-image", "GPT-4V"],
+    "type": "factual"
+  },
+  {
+    "id": 12,
+    "question": "Describe the scaling laws that govern the relationship between model size, data, and compute.",
+    "correct_page_range": [1, 30],
+    "expected_keywords": ["scaling laws", "compute", "model size", "data", "Chinchilla", "Kaplan", "power law"],
+    "type": "multi-sentence"
+  },
+  {
+    "id": 13,
+    "question": "What pre-training objectives are used in models such as BERT and GPT?",
+    "correct_page_range": [10, 35],
+    "expected_keywords": ["pre-training", "masked language modeling", "MLM", "causal language modeling", "CLM", "BERT", "GPT", "objective"],
+    "type": "factual"
+  },
+  {
+    "id": 14,
+    "question": "Which techniques help reduce the memory footprint when training very large neural networks?",
+    "correct_page_range": [30, 55],
+    "expected_keywords": ["gradient checkpointing", "mixed precision", "ZeRO", "model parallelism", "pipeline parallelism", "memory"],
+    "type": "tricky"
+  },
+  {
+    "id": 15,
+    "question": "How do researchers assess the in-context learning ability of language models on downstream NLP tasks?",
+    "correct_page_range": [50, 85],
+    "expected_keywords": ["in-context learning", "few-shot", "zero-shot", "downstream", "NLP", "prompting", "demonstrations"],
+    "type": "paraphrased"
+  }
+]

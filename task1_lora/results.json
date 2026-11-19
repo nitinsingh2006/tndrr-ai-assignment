@@ -1,0 +1,24 @@
+{
+  "_note": "TEMPLATE — run evaluate.py after training to fill real values",
+  "base": {
+    "valid_json_rate": "RUN_EVALUATE",
+    "exact_match": "RUN_EVALUATE",
+    "per_field_accuracy": {
+      "action":   "RUN",
+      "item":     "RUN",
+      "quantity": "RUN",
+      "date":     "RUN"
+    }
+  },
+  "finetuned": {
+    "valid_json_rate": "RUN_EVALUATE",
+    "exact_match": "RUN_EVALUATE",
+    "per_field_accuracy": {
+      "action":   "RUN",
+      "item":     "RUN",
+      "quantity": "RUN",
+      "date":     "RUN"
+    }
+  },
+  "failures": []
+}

@@ -1,0 +1,12 @@
+[
+  {"id": 1, "prompt": "What is the capital of France?", "category": "factual"},
+  {"id": 2, "prompt": "Explain the concept of recursion in programming in 2-3 sentences.", "category": "explanation"},
+  {"id": 3, "prompt": "Write a Python function that checks if a number is prime.", "category": "code"},
+  {"id": 4, "prompt": "What is 15% of 240? Show your working.", "category": "math"},
+  {"id": 5, "prompt": "List 3 pros and 3 cons of electric vehicles.", "category": "list"},
+  {"id": 6, "prompt": "Translate 'Hello, how are you?' to French and Spanish.", "category": "translation"},
+  {"id": 7, "prompt": "Summarize the water cycle in one paragraph.", "category": "summary"},
+  {"id": 8, "prompt": "What year did World War II end, and what were the main causes?", "category": "history"},
+  {"id": 9, "prompt": "Give me a short creative story about a robot learning to paint (3 sentences).", "category": "creative"},
+  {"id": 10, "prompt": "What is machine learning? Explain to a 10-year-old.", "category": "explanation_simple"}
+]
