@@ -91,12 +91,18 @@ Embedding search is good at **semantic similarity** — "automobile" matches "ca
 But it fails on **rare words** — if the query has a specific acronym like "RLHF" or a model name like "CLIP" (used in multimodal LLMs), embeddings might miss the exact chunk.  
 BM25 is a keyword search — it matches exact terms. Combining both (via Reciprocal Rank Fusion) gives you the best of both worlds.
 
-**Real results (chunk=500 setting):**  
-- Dense-only Recall@5: 0.867  
-- BM25 hybrid Recall@5: **1.000** (perfect — all 15 questions had the correct page in top-5)  
-- The BM25 hybrid gained 0.133 by catching keyword-matching cases that the embeddings missed.
+**Real results (chunk=200 setting, with passage-overlap hit logic):**  
+- Dense Recall@1: 0.400 / Recall@5: 0.733 / MRR: 0.550  
+- BM25 Hybrid Recall@5: **0.933**  
 
-**Important:** Our BM25 implementation had a bug initially (storing normalized TF instead of raw counts), causing it to give nearly identical scores to all chunks. After fixing it, BM25 hybrid significantly outperformed dense-only retrieval.
+**Real results (chunk=500 setting):**  
+- Dense Recall@1: 0.533 / Recall@5: 0.667 / MRR: 0.600  
+- BM25 Hybrid Recall@5: **0.933**  
+
+**Best setting**: chunk=200 wins on Recall@5 (0.733 vs 0.667); chunk=500 wins on Recall@1 (0.533 vs 0.400).  
+Hit logic: a chunk counts as a hit if its page falls in the correct range OR passage word-overlap ≥ 50% (Jaccard on words).
+
+**Important — honest finding about the BM25 bug:** The old BM25 code (storing normalized TF) actually produced reasonable score spreads (2–4 points across top-5), NOT near-identical scores as initially claimed. The main cause of the original 0.333 Recall@5 was **wrong page ranges in questions.json** (pages 70–100 on a 47-page PDF → zero possible hits). The BM25 code fix is correct (raw counts are more numerically stable), but the page-range fix deserves most of the credit for the metric jump. Fixing both is the right approach.
 
 ### What a Re-ranker Does
 
@@ -171,4 +177,8 @@ Quantization reduces weight precision (fp32→int8→int4). Saves memory proport
 Traditional serving pads all requests in a batch to the same length — wastes computation. vLLM uses continuous batching: when one request finishes, a new one is inserted without waiting for the whole batch. This maximizes GPU utilization and throughput.
 
 **Q10: Why is the KV cache size per user proportional to context length?**  
-KV cache stores K and V tensors for every token in the context, for every layer, for every head. Formula: 2 (K+V) × layers × kv_heads × head_dim × context_len × bytes. Longer context = linearly more cache. This is why long contexts need paged attention (vLLM) to avoid memory fragmentation.
+KV cache stores K and V tensors for every token in the context, for every layer, for every KV head.  
+Formula: `2 × layers × kv_heads × head_dim × context_len × bytes`.  
+For Qwen2.5-0.5B (our actual model): `2 × 24 × 2 × 64 × 2048 × 2 = 25 MB per user`.  
+20 users → 0.503 GB total KV. For a 7B model (28 layers, 4 KV heads, head_dim=128): 0.118 GB/user, 2.36 GB for 20 users.  
+Longer context = linearly more cache. This is why long contexts need paged attention (vLLM) to avoid memory fragmentation.

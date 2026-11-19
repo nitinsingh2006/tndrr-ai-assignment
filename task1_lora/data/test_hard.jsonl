@@ -1,0 +1,20 @@
+{"input": "7 chargers need to be booked before 2025-11-03.", "output": {"action": "book", "item": "charger", "quantity": "7", "date": "2025-11-03"}, "hard": true}
+{"input": "Could you procure 8 units of webcam before 2025-03-10?", "output": {"action": "procure", "item": "webcam", "quantity": "8", "date": "2025-03-10"}, "hard": true}
+{"input": "i need to purhcase 13 mouse untill 2025-09-29", "output": {"action": "purchase", "item": "mouse", "quantity": "13", "date": "2025-09-29"}, "hard": true}
+{"input": "We need 20 keyboards by 2025-09-08.", "output": {"action": "buy", "item": "keyboard", "quantity": "20", "date": "2025-09-08"}, "hard": true}
+{"input": "Acquire 20 chargers no later than 2025-10-29.", "output": {"action": "acquire", "item": "charger", "quantity": "20", "date": "2025-10-29"}, "hard": true}
+{"input": "Acquire 13 tablets no later than 2025-12-16.", "output": {"action": "acquire", "item": "tablet", "quantity": "13", "date": "2025-12-16"}, "hard": true}
+{"input": "Acquire 15 headsets no later than 2025-12-05.", "output": {"action": "acquire", "item": "headset", "quantity": "15", "date": "2025-12-05"}, "hard": true}
+{"input": "Could you procure 11 units of projector before 2025-02-12?", "output": {"action": "procure", "item": "projector", "quantity": "11", "date": "2025-02-12"}, "hard": true}
+{"input": "Book 16 keyboards and schedule delivery for 2025-06-11.", "output": {"action": "book", "item": "keyboard", "quantity": "16", "date": "2025-06-11"}, "hard": true}
+{"input": "9 monitors need to be booked before 2025-10-13.", "output": {"action": "book", "item": "monitor", "quantity": "9", "date": "2025-10-13"}, "hard": true}
+{"input": "Pleas ordder 7 chargers beforre 2025-07-05.", "output": {"action": "order", "item": "charger", "quantity": "7", "date": "2025-07-05"}, "hard": true}
+{"input": "We need 15 keyboards by 2025-09-23.", "output": {"action": "buy", "item": "keyboard", "quantity": "15", "date": "2025-09-23"}, "hard": true}
+{"input": "Acquire 15 projectors no later than 2025-01-27.", "output": {"action": "acquire", "item": "projector", "quantity": "15", "date": "2025-01-27"}, "hard": true}
+{"input": "7 headsets should be ordered by 2025-03-24.", "output": {"action": "order", "item": "headset", "quantity": "7", "date": "2025-03-24"}, "hard": true}
+{"input": "Urgent: we must purchase 6 projectors before our deadline on 2025-09-15.", "output": {"action": "purchase", "item": "projector", "quantity": "6", "date": "2025-09-15"}, "hard": true}
+{"input": "Could you procure 4 units of monitor before 2025-01-12?", "output": {"action": "procure", "item": "monitor", "quantity": "4", "date": "2025-01-12"}, "hard": true}
+{"input": "Could you procure 14 units of cable before 2025-02-11?", "output": {"action": "procure", "item": "cable", "quantity": "14", "date": "2025-02-11"}, "hard": true}
+{"input": "Hi there! Can you please order 5 keyboards for me by 2025-06-08? Thank you so much!", "output": {"action": "order", "item": "keyboard", "quantity": "5", "date": "2025-06-08"}, "hard": true}
+{"input": "13 monitors, 2025-06-18.", "output": {"action": "order", "item": "monitor", "quantity": "13", "date": "2025-06-18"}, "hard": true}
+{"input": "Get me 13 docking station right now.", "output": {"action": "get", "item": "docking station", "quantity": "13", "date": null}, "hard": true}

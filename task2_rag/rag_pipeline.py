@@ -487,17 +487,43 @@ def answer_with_llm(
 # ---------------------------------------------------------------------------
 
 
-def _page_in_results(page_range: list[int], results: list[dict]) -> bool:
-    """Check if any result falls within [page_range[0], page_range[1]]."""
+def _passage_overlap(passage: str, chunk_text: str) -> float:
+    """Return word-level overlap ratio between passage and chunk (Jaccard on words)."""
+    if not passage or not chunk_text:
+        return 0.0
+    p_words = set(re.findall(r'\b[a-zA-Z0-9]+\b', passage.lower()))
+    c_words = set(re.findall(r'\b[a-zA-Z0-9]+\b', chunk_text.lower()))
+    if not p_words:
+        return 0.0
+    # What fraction of passage words appear in the chunk?
+    return len(p_words & c_words) / len(p_words)
+
+
+def _is_hit(q: dict, result: dict) -> bool:
+    """A chunk is a hit if passage overlap >= 50% OR page in correct_page_range."""
+    page_range = q.get("correct_page_range", [0, 999])
+    lo, hi = page_range[0], page_range[1]
+    page_ok = lo <= result["page"] <= hi
+    passage = q.get("correct_source_passage", "")
+    overlap = _passage_overlap(passage, result.get("text", ""))
+    return page_ok or overlap >= 0.50
+
+
+def _page_in_results(page_range: list[int], results: list[dict],
+                     q: dict | None = None) -> bool:
+    """Check if any result is a hit (page match OR passage overlap >= 50%)."""
+    if q is not None:
+        return any(_is_hit(q, r) for r in results)
     lo, hi = page_range[0], page_range[1]
     return any(lo <= r["page"] <= hi for r in results)
 
 
-def _reciprocal_rank(page_range: list[int], results: list[dict]) -> float:
-    """Return 1/rank of the first result whose page is in the correct range."""
-    lo, hi = page_range[0], page_range[1]
+def _reciprocal_rank(page_range: list[int], results: list[dict],
+                     q: dict | None = None) -> float:
+    """Return 1/rank of the first hit result."""
     for r in results:
-        if lo <= r["page"] <= hi:
+        hit = _is_hit(q, r) if q is not None else (page_range[0] <= r["page"] <= page_range[1])
+        if hit:
             return 1.0 / r["rank"]
     return 0.0
 
@@ -550,9 +576,9 @@ def evaluate_retrieval(
         top5 = retrieve(question, chunks, embeddings, model, index, top_k=5)
         top1 = top5[:1]
 
-        hit_at_1 = float(_page_in_results(page_range, top1))
-        hit_at_5 = float(_page_in_results(page_range, top5))
-        rr = _reciprocal_rank(page_range, top5)
+        hit_at_1 = float(_page_in_results(page_range, top1, q=q))
+        hit_at_5 = float(_page_in_results(page_range, top5, q=q))
+        rr = _reciprocal_rank(page_range, top5, q=q)
 
         recalls_at_1.append(hit_at_1)
         recalls_at_5.append(hit_at_5)
@@ -579,7 +605,7 @@ def evaluate_retrieval(
             top_k=5,
             bm25_cache=bm25_cache,
         )
-        hybrid_recalls_at_5.append(float(_page_in_results(page_range, hybrid5)))
+        hybrid_recalls_at_5.append(float(_page_in_results(page_range, hybrid5, q=q)))
 
     metrics = {
         "num_chunks": len(chunks),

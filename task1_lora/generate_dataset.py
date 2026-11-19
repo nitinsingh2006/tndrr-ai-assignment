@@ -165,3 +165,96 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# ─────────────────────────────────────────────────────────────────────────────
+# HARD TEST GENERATOR  (20 adversarial examples, seed=99)
+# Appended by audit pass to task1_lora/generate_dataset.py
+# ─────────────────────────────────────────────────────────────────────────────
+
+HARD_TEMPLATES = [
+    # Typos / misspellings
+    ("Pleas ordder {qty} {item}s beforre {date}.", {"action": "order", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    ("Coud u boook {qty} {item} fr {date}?", {"action": "book", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    ("i need to purhcase {qty} {item} untill {date}", {"action": "purchase", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    # Missing field (no date → model should output null/empty)
+    ("Order {qty} {item}s asap.", {"action": "order", "item": "{item}", "quantity": "{qty}", "date": None}),
+    ("Get me {qty} {item} right now.", {"action": "get", "item": "{item}", "quantity": "{qty}", "date": None}),
+    # Different phrasing / synonym
+    ("Could you procure {qty} units of {item} before {date}?", {"action": "procure", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    ("Acquire {qty} {item}s no later than {date}.", {"action": "acquire", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    ("Requisition {qty} {item}s to be delivered by {date}.", {"action": "requisition", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    ("We require {qty} {item}s to arrive prior to {date}.", {"action": "require", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    # Number written as words
+    ("Book fifteen {item}s for {date}.", {"action": "book", "item": "{item}", "quantity": "15", "date": "{date}"}),
+    ("Order two {item}s before {date}.", {"action": "order", "item": "{item}", "quantity": "2", "date": "{date}"}),
+    # Passive voice
+    ("{qty} {item}s should be ordered by {date}.", {"action": "order", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    ("{qty} {item}s need to be booked before {date}.", {"action": "book", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    # Extra noise / irrelevant words
+    ("Hi there! Can you please order {qty} {item}s for me by {date}? Thank you so much!", {"action": "order", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    ("Urgent: we must purchase {qty} {item}s before our deadline on {date}.", {"action": "purchase", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    # Date in different format
+    ("Order {qty} {item}s by {date_dmy}.", {"action": "order", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    # Multi-item sentence (tricky)
+    ("Book {qty} {item}s and schedule delivery for {date}.", {"action": "book", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    # Implicit action (buy inferred)
+    ("We need {qty} {item}s by {date}.", {"action": "buy", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    # All-caps
+    ("ORDER {qty} {item}S BY {date}.", {"action": "order", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+    # Sentence fragment
+    ("{qty} {item}s, {date}.", {"action": "order", "item": "{item}", "quantity": "{qty}", "date": "{date}"}),
+]
+
+ITEMS_HARD = ["monitor", "keyboard", "headset", "webcam", "mouse", "tablet",
+              "charger", "cable", "docking station", "projector"]
+
+
+def generate_hard_tests(n: int = 20, seed: int = 99) -> list[dict]:
+    """Generate n hard adversarial test examples."""
+    import random, re
+    from datetime import date, timedelta
+    rng = random.Random(seed)
+    examples = []
+    for _ in range(n):
+        tmpl, schema = rng.choice(HARD_TEMPLATES)
+        item = rng.choice(ITEMS_HARD)
+        qty = rng.randint(1, 20)
+        base = date(2025, 1, 1) + timedelta(days=rng.randint(0, 364))
+        date_iso = base.strftime("%Y-%m-%d")
+        date_dmy = base.strftime("%d/%m/%Y")
+        text = (tmpl
+                .replace("{qty}", str(qty))
+                .replace("{item}", item)
+                .replace("{date}", date_iso)
+                .replace("{date_dmy}", date_dmy))
+        output = {}
+        for k, v in schema.items():
+            if v is None:
+                output[k] = None
+            else:
+                output[k] = (str(v)
+                             .replace("{item}", item)
+                             .replace("{qty}", str(qty))
+                             .replace("{date}", date_iso))
+        examples.append({"input": text, "output": output, "hard": True})
+    return examples
+
+
+if __name__ == "__main__" and "hard" in __import__("sys").argv:
+    import json, os
+    hard = generate_hard_tests(20, seed=99)
+    # Verify no overlap with train
+    train_path = os.path.join(os.path.dirname(__file__), "data", "train.jsonl")
+    train_inputs = set()
+    if os.path.exists(train_path):
+        with open(train_path) as f:
+            for line in f:
+                row = json.loads(line)
+                train_inputs.add(row["input"].strip().lower())
+    overlaps = [h for h in hard if h["input"].strip().lower() in train_inputs]
+    print(f"Hard examples: {len(hard)}, Overlap with train: {len(overlaps)}")
+    out_path = os.path.join(os.path.dirname(__file__), "data", "test_hard.jsonl")
+    with open(out_path, "w") as f:
+        for ex in hard:
+            f.write(json.dumps(ex) + "\n")
+    print(f"Written to {out_path}")
