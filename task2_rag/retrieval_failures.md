@@ -22,42 +22,42 @@ These are real failure questions taken directly from `results.json > failures` f
 
 ### Failure 1 — Multimodal LLMs (Q11)
 
-**Question (ID 11):** "What are multimodal large language models and how do they process images alongside text?"  
-**Expected page range:** pages 19–27 (multimodal section)  
-**Retrieved pages (top-5):** 42, 42, 40, 36, 1 ❌  
+**Question (ID 11):** "What are multimodal LLMs and what do they process beyond text?"  
+**Expected page range:** [22, 22]  
+**Retrieved pages (top-5):** [19, 32, 1, 20, 7] ❌  
 **Correct page in top-5?** No → Recall@5 = 0 for this question  
 
 **Why it failed — Vocabulary Drift:**  
 The document discusses multimodal models using terms like "vision encoder," "CLIP," and
-"visual features." Our query says "process images alongside text." The sentence-transformer
-(`all-MiniLM-L6-v2`) embeds these similarly, but pages 36–42 (retrieved) also contain
-image-related mentions (figures, model diagrams, tables), which confuse the retriever.
-The specific multimodal architecture discussion on pages 19–27 is spread across a dense
-technical section — no single 500-token chunk fully captures both "multimodal" and
-"image processing pipeline" together, so the top-5 misses them all.
+"visual features." Our query asks what they process beyond text. The sentence-transformer
+(`all-MiniLM-L6-v2`) embeds these similarly, but pages 19, 32, and 1 contain general
+multi-task and benchmark discussions that scored slightly higher.
 
-**Root cause:** The correct content is scattered. No single chunk has the right density of
-"multimodal + image processing" to beat the retrieved chunks from later pages.
+**Root cause:** Dense semantic embedding matched broad vision/text mentions on other pages.
 
-**What would fix it:**  
-- **Smaller chunks (200 tokens):** Finer granularity gives a better hit on the specific
-  sentence that defines multimodal LLMs.  
-- **BM25 hybrid:** "CLIP" and "vision encoder" are rare tokens. BM25 would score the
-  correct chunk very high because these exact words appear there.
+**What fixed it:**  
+- **BM25 hybrid:** "multimodal" is a distinctive term. BM25 scores the exact chunk on page 22
+  very high, bringing the combined RRF rank into the top-5 (Recall@5 becomes 1.0 with hybrid).
 
 ---
 
-### Failure 2 — In-Context Learning Assessment (Q15)
+### Failure 2 — Mixed Precision Training (Q14)
 
-**Question (ID 15):** "How do researchers assess the in-context learning ability of language models on downstream NLP tasks?"  
-**Expected page range:** pages 7–20 (prompting + evaluation section)  
-**Retrieved pages (top-5):** 27, 2, 43, 43, 36 ❌  
+**Question (ID 14):** "What is mixed precision training and why is it used?"  
+**Expected page range:** [23, 23]  
+**Retrieved pages (top-5):** [7, 36, 2, 12, 36] ❌  
 **Correct page in top-5?** No → Recall@5 = 0 for this question  
 
-**Why it failed — Paraphrase Mismatch:**  
-Our question is a paraphrase. The document does not use the phrase "assess the in-context
-learning ability." Instead it says things like "evaluate few-shot prompting," "zero-shot
-performance on NLP benchmarks," "in-context demonstrations." These are semantically equivalent
+**Why it failed — Technical Term Confusion:**  
+The term "precision" and "training" appeared in many contexts across the survey (RLHF on page 7,
+evaluation benchmarks on page 36, scaling laws on page 2). The dense embedding scattered across
+these multiple training sections.
+
+**Root cause:** Generic training vocabulary caused false matches across the document.
+
+**What fixed it:**  
+- **BM25 hybrid:** "mixed precision" (FP16/BF16) matched exact keywords in the training
+  infrastructure section on page 23, rescuing the retrieval.
 but the embedding distance is large enough that pages 27, 43 (which discuss evaluation in
 different contexts) rank higher than the correct pages 7–20.
 
@@ -80,8 +80,8 @@ chunk about "evaluation" even if it's not about in-context learning specifically
 
 | Failure | Root Cause | Fix |
 |---------|-----------|-----|
-| Q11 (Multimodal) | Content scattered, no dense chunk covers it | Smaller chunks OR BM25 for exact terms |
-| Q15 (ICL assessment) | Paraphrase gap — different vocabulary, same meaning | Cross-encoder re-ranker or HyDE |
+| Q11 (Multimodal) | Broad semantic overlap with benchmark/vision sections | Smaller chunks OR BM25 for exact terms |
+| Q14 (Mixed precision) | Generic training vocabulary scattered across document | BM25 exact match on FP16/BF16 keywords |
 
 Both are **different failure modes** — one is about chunking granularity, one is about
 vocabulary mismatch in paraphrased questions. This demonstrates why no single retrieval

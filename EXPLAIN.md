@@ -122,11 +122,11 @@ Embedding search is good at **semantic similarity** — "automobile" matches "ca
 But it fails on **rare words** — if the query has a specific acronym like "RLHF" or a model name like "CLIP" (used in multimodal LLMs), embeddings might miss the exact chunk.  
 BM25 is a keyword search — it matches exact terms. Combining both (via Reciprocal Rank Fusion) gives you the best of both worlds.
 
-**Real results (chunk=200 setting):**  
+**Real results (chunk=200 setting, 449 chunks):**  
 - Dense Recall@1: 0.333 / Recall@5: **0.733** / MRR: 0.517  
 - BM25 Hybrid Recall@5: **0.933**  
 
-**Real results (chunk=500 setting):**  
+**Real results (chunk=500 setting, 197 chunks):**  
 - Dense Recall@1: 0.533 / Recall@5: 0.667 / MRR: 0.600  
 - BM25 Hybrid Recall@5: 0.933  
 
